@@ -1,0 +1,8 @@
+{
+  "/rest": {
+    "target": "http://blablagruz.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

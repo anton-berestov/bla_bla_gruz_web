@@ -1,1 +1,67 @@
-/* You can add global styles to this file, and also import other style files */
+/* Importing Bootstrap SCSS file. */
+@use 'bootstrap/scss/bootstrap';
+
+
+@font-face {
+  font-family: 'Geologica';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/fonts/Geologica-Medium.ttf'),
+  url('assets/fonts/Geologica-Regular.ttf'),
+  url('assets/fonts/Geologica-Bold.ttf'),
+  url('assets/fonts/Geologica-SemiBold.ttf'),
+  url('assets/fonts/Geologica-Thin.ttf')
+
+}
+
+@font-face {
+  font-family: 'IntroBlackItalic';
+  font-style: normal;
+  src: url('assets/fonts/IntroBlackItalic.ttf');
+}
+
+.subtitle {
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.03em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #3838F5;
+}
+
+input:focus {
+  outline: none !important;
+}
+
+body {
+  font-family: 'Geologica', serif;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.input-group-text {
+  color: #787ea1;
+  background-color: #f8f9fa;
+  border-radius: 10px 0 0 10px;
+}
+
+.form-control {
+  border-radius: 0 10px 10px 0;
+  background-color: #F6F7FC;
+  padding: 10px 20px;
+}
+
+.form-check-input {
+  border-color: #787ea1;
+  width: 20px;
+  height: 20px;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
