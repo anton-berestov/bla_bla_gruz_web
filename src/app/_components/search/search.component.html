@@ -1,0 +1,150 @@
+<section class="search">
+  <div class="container">
+    <div class="row pt-5">
+      <!-- Текстовый блок -->
+      <div class="col-12 col-xl-6 offset-xl-6 text-center text-md-end mt-5">
+        <h1 class="title mt-5">BlaBlaGruz</h1>
+        <div class="description">
+          Это инновационное приложение, которое делает процесс поиска и организации грузоперевозок простым и удобным.
+          Теперь перевозчики и отправители могут легко находить друг друга и договариваться о перевозках всего в
+          несколько касаний экрана.
+        </div>
+      </div>
+    </div>
+
+
+    <div
+      class="row align-items-center bg-white rounded px-1 py-2 shadow-sm flex-column flex-xl-row mt-5 mb-5 search-box">
+      <!-- Откуда -->
+      <div class="col-12 col-xl mb-3 mb-xl-0  position-relative">
+        <div class="input-group">
+        <span class="input-group-text bg-light border-0">
+          <i class="bi bi-geo-alt"></i>
+        </span>
+          <input
+            type="text"
+            class="form-control border-0"
+            placeholder="Откуда"
+            aria-label="Откуда"
+            #from
+          />
+          <div *ngIf="suggestionsFrom.length" class="position-absolute w-100 top-10" style="z-index: 999; top: 50px">
+            <ul class="list-group">
+              <li
+                class="list-group-item"
+                *ngFor="let suggestion of suggestionsFrom"
+                (click)="selectSuggestionFrom(suggestion)"
+              >
+                {{ suggestion.description }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Куда -->
+      <div class="col-12 col-xl mb-3 mb-xl-0 position-relative">
+        <div class="input-group">
+        <span class="input-group-text bg-light border-0">
+          <i class="bi bi-pin-map"></i>
+        </span>
+          <input
+            type="text"
+            class="form-control border-0"
+            placeholder="Куда"
+            aria-label="Куда"
+            #where
+          />
+          <div *ngIf="suggestionsWhere.length" class="position-absolute w-100" style="z-index: 999; top: 50px">
+            <ul class="list-group">
+              <li
+                class="list-group-item"
+                *ngFor="let suggestion of suggestionsWhere"
+                (click)="selectSuggestionWhere(suggestion)"
+              >
+                {{ suggestion.description }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Сегодня -->
+      <div class="col-12 col-xl mb-3 mb-xl-0" (click)="d.open()">
+        <div class="input-group">
+        <span class="input-group-text bg-light border-0 cursor">
+          <i class="bi bi-calendar-event"></i>
+        </span>
+          <input
+            type="text"
+            class="form-control border-0"
+            placeholder="Сегодня"
+            aria-label="Сегодня"
+            ngbDatepicker
+            #d="ngbDatepicker"
+            (dateSelect)="d.close(); onDateSelect($event); "
+          />
+        </div>
+      </div>
+
+      <!-- Габариты -->
+      <div class="col-12 col-xl mb-3 mb-xl-0" (click)="openDimensions()">
+        <div class="input-group">
+        <span class="input-group-text bg-light border-0">
+          <i class="bi bi-box"></i>
+        </span>
+          <input
+            type="text"
+            class="form-control border-0"
+            placeholder="Габариты"
+            aria-label="Габариты"
+          />
+        </div>
+      </div>
+
+      <!-- Вес -->
+      <div class="col-12 col-xl mb-3 mb-xl-0">
+        <div class="input-group">
+        <span class="input-group-text bg-light border-0">
+          <i class="bi bi-bag"></i>
+        </span>
+          <input
+            type="text"
+            class="form-control border-0"
+            placeholder="Вес"
+            aria-label="Вес"
+          />
+        </div>
+      </div>
+
+      <!-- Чекбоксы -->
+      <div class="col-12 col-xl d-flex flex-column mb-xl-0" *ngIf="appService.cargoTypes | async as cargoTypes">
+        @for (item of cargoTypes; track item.name) {
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [value]="item.cargo_type"
+              [id]="'type-' + item.cargo_type"
+              (change)="onCheckboxChange($event, item.cargo_type)"
+            />
+            <label class="form-check-label" [for]="'type-' + item.cargo_type">
+              {{ item.name }}
+            </label>
+          </div>
+        }
+      </div>
+
+      <!-- Кнопка -->
+      <div class="col-12 col-md-auto">
+        <button
+          type="button" class="btn btn-primary px-4 fw-bold"
+          [disabled]="!appService.searchDate && !appService.searchWhere && !appService.searchFrom"
+          (click)="search()"
+        >
+          Поиск
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

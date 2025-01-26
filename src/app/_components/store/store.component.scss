@@ -1,0 +1,59 @@
+.phone-container {
+  width: 100%;
+  max-width: 300px;
+  padding: 20px;
+  background: #fff;
+  border: 12px solid #31357B;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  border-bottom: 0;
+  margin-bottom: -70px;
+}
+
+.phone-frame {
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.phone-notch {
+  width: 50px;
+  height: 10px;
+  background: #000;
+  border-radius: 10px;
+  margin: 0 auto 10px auto;
+}
+
+.title {
+  font-style: italic;
+  color: #303878;
+  font-family: Geologica, serif;
+  font-size: 52px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.description {
+  font-family: Geologica, serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 200;
+  line-height: 21.6px;
+  letter-spacing: -0.02em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #303878;
+}
+
+.store-button {
+  background-color: #DDDDEB;
+  border-radius: 20px;
+  width: 100px;
+  height: 100px
+}

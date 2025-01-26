@@ -1,0 +1,46 @@
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.blablagruz {
+  font-family: IntroBlackItalic, sans-serif;
+  font-size: 50px;
+  font-style: italic;
+  font-weight: 900;
+  line-height: 50px;
+  letter-spacing: -0.04em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #31357B;
+}
+
+@media screen and (max-width: 967px) {
+  //.blablagruz {
+  //  display: none;
+  //}
+
+  .subtitle {
+    visibility: hidden;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navbar-brand {
+    max-width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .navbar-toggler {
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+}
