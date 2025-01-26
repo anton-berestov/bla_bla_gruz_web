@@ -8,10 +8,12 @@ import { BlogComponent } from './_components/blog/blog.component';
 import { AppService } from './app.service';
 import { HttpClient } from '@angular/common/http';
 import { CargoType } from './models/CargoType';
+import { NgIf } from '@angular/common';
+import { RoutesComponent } from './_components/routes/routes.component';
 
 @Component({
   selector: 'app-root',
-  imports: [ HeaderComponent, FooterComponent, SearchComponent, AdvantagesComponent, StoreComponent, BlogComponent ],
+  imports: [ HeaderComponent, FooterComponent, SearchComponent, AdvantagesComponent, StoreComponent, BlogComponent, NgIf, RoutesComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [ HttpClient ]
@@ -19,7 +21,7 @@ import { CargoType } from './models/CargoType';
 export class AppComponent implements OnInit {
   title = 'BlaBlaGruz';
 
-  constructor(private appService: AppService) {
+  constructor(protected appService: AppService) {
   }
 
   ngOnInit(): void {

@@ -4,6 +4,7 @@ import { environment } from '../environments/environment';
 import { CargoType } from './models/CargoType';
 import { Observable, Timestamp } from 'rxjs';
 import { objToFormData } from './helpers/form';
+import { Route } from './models/Route';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AppService {
 
   public cargoTypes: Observable<CargoType[]> = new Observable();
   public selectedCargoTypes: number[] = [];
-  public routes: any = []
+  public routes: Route[] = []
 
   public searchDate: any;
   public searchWhere: { lat: number | undefined; lng: number | undefined } = { lat: 0, lng: 0 };
@@ -34,13 +35,10 @@ export class AppService {
       start: `${this.searchFrom.lat},${this.searchFrom.lng}`,
       end: `${this.searchWhere.lat},${this.searchWhere.lng}`,
       date: this.searchDate,
+      // size: this.searchSize ? this.searchSize : null,
+      // weight: this.searchWeight ? this.searchWeight : null
     };
-    // if (this.searchWeight) {
-    //   data.weight = this.searchWeight;
-    // }
-    // if (this.searchSize) {
-    //   data.size = this.searchSize;
-    // }
+
     // if (this.selectedCargoTypes.length) {
     //   data.cargo_types = [];
     //   this.selectedCargoTypes.map((el) => {
@@ -48,8 +46,8 @@ export class AppService {
     //   });
     // }
 
-    this.http.post(`${this.baseUrl}routes/search`, objToFormData(data)).subscribe(
-      (response) => {
+    this.http.post<Route[]>(`${this.baseUrl}routes/search`, objToFormData(data)).subscribe(
+      (response: Route[]) => {
         this.routes = response;
       },
       (error) => {

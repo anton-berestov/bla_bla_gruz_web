@@ -8,6 +8,7 @@ import {
 } from '@angular/material/dialog';
 import { DimensionsComponent } from '../dimensions/dimensions.component';
 import { environment } from '../../../environments/environment';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
@@ -18,7 +19,8 @@ import { environment } from '../../../environments/environment';
     NgIf,
     NgForOf,
     GoogleMapsModule,
-    AsyncPipe
+    AsyncPipe,
+    FormsModule
   ],
   standalone: true,
   styleUrl: './search.component.scss'
