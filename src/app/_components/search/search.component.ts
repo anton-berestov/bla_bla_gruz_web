@@ -7,6 +7,7 @@ import {
   MatDialog,
 } from '@angular/material/dialog';
 import { DimensionsComponent } from '../dimensions/dimensions.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-search',
@@ -31,6 +32,8 @@ export class SearchComponent {
 
   readonly dialog = inject(MatDialog);
 
+  private googleApiKey = environment.googleApiKey;
+
 
   constructor(protected appService: AppService, @Inject(PLATFORM_ID) private platformId: any) {
   }
@@ -45,7 +48,7 @@ export class SearchComponent {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src =
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyBFPOVAaSk1xaAwJ4XJvDFLUkTeIgol1ME&libraries=places';
+        `https://maps.googleapis.com/maps/api/js?key=${this.googleApiKey}&libraries=places`;
       script.async = true;
       script.defer = true;
       script.onload = () => resolve();
