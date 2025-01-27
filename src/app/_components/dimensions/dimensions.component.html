@@ -1,6 +1,6 @@
 <div class="p-4">
   <div class="pb-3">Введите информацию о размерах груза</div>
-  <div class="input-group mb-3">
+  <div class="input-group mb-3 text-align-center">
     <span class="input-group-text bg-light border-0">
       <i class="bi bi-box"></i>
     </span>
@@ -12,7 +12,7 @@
       (input)="handlerLength($event)"
       (change)="handlerLength($event)"
       [(ngModel)]="length"
-    />
+    /><span class="input-group-text bg-light border-0 radius-right">см</span>
   </div>
   <div class="input-group mb-3">
     <span class="input-group-text bg-light border-0">
@@ -26,21 +26,22 @@
       (input)="handlerWidth($event)"
       (change)="handlerWidth($event)"
       [(ngModel)]="width"
-    />
+    /><span class="input-group-text bg-light border-0 radius-right">см</span>
   </div>
-  <div class="input-group mb-3">
+  <div class="input-group mb-3 text-center">
     <span class="input-group-text bg-light border-0">
       <i class="bi bi-box"></i>
     </span>
     <input
       type="text"
-      class="form-control border-0"
+      class="form-control border-0 "
       placeholder="Высота"
       aria-label="Высота"
       (input)="handlerHeight($event)"
       (change)="handlerHeight($event)"
       [(ngModel)]="height"
     />
+    <span class="input-group-text bg-light border-0 radius-right">см</span>
   </div>
 
   <div class="col-12 col-md-auto float-end">

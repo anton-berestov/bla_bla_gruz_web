@@ -1,1 +1,63 @@
-<p>routes works!</p>
+<section>
+  <div class="container mt-4">
+    <h3 class="mb-3">Завтра, 30 декабря</h3>
+    <p class="pb-0 mb-0 text-muted">
+      Краснодарский край, Краснодар, Россия → Москва, Россия:
+    </p>
+    <p class="pt-0 mt-0 text-muted">5 перевозчиков</p>
+    <div *ngFor="let route of appService.routes"
+         class="route-card d-flex align-items-center mb-3 p-3 ps-0 rounded shadow-sm">
+      <div class="route-card-left me-3">
+        <div class="rating-badge">
+          <img src="assets/img/rating.svg" alt="rating" class="rating-image">
+          <div class="rating-overlay">
+            <span class="rating-icon">★</span>
+            <span class="rating-value">{{ route.account?.rating }}</span>
+          </div>
+        </div>
+        <div class="reviews-block">
+          <div class="reviews-badge">
+            <img src="assets/img/reviews.svg" alt="reviews" class="reviews-image">
+            <span class="reviews-count">{{ route.account?.reviews || '0' }}</span>
+          </div>
+          <div class="reviews-text">Отзывы</div>
+        </div>
+      </div>
+
+      <div class="route-card-middle flex-grow-1">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="d-flex flex-row align-items-center justify-content-start">
+              <img src="assets/img/steering-wheel-fill.svg" alt="steering"/>
+              <small class="text-muted text-center executor ms-2">Исполнитель</small>
+            </div>
+            <a class="mb-1 text-primary text-center mt-1 cursor executor-name">{{ route.account.name }}</a>
+          </div>
+          <!--          <div class="route-timeline d-flex align-items-center">-->
+          <!--            <span>{{ formatDate(route.start.date) }}</span>-->
+          <!--            <span class="mx-2">—</span>-->
+          <!--            <span>{{ formatDate(route.end.date) }}</span>-->
+          <!--          </div>-->
+        </div>
+        <!--        <div class="route-details d-flex justify-content-between mt-2">-->
+        <!--          <span>{{ route.start.point }}</span>-->
+        <!--          <span class="mx-2">→</span>-->
+        <!--          <span>{{ route.end.point }}</span>-->
+        <!--        </div>-->
+        <!--        <div class="route-weight mt-2 text-muted">-->
+        <!--          Ограничения: до <strong>{{ route.weight }} кг</strong>-->
+        <!--        </div>-->
+      </div>
+
+      <div class="route-card-right text-end">
+        <div class="route-price text-primary fw-bold">
+          {{ route.price }} руб./кг
+        </div>
+        <div class="route-actions mt-2">
+          <button class="btn btn-outline-secondary btn-sm">Связаться</button>
+          <button class="btn btn-outline-secondary btn-sm ms-2">Детали</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

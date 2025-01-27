@@ -1,0 +1,114 @@
+.route-card {
+  background-color: #F9F9FF;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rating-badge {
+  position: relative;
+  width: 100px;
+  height: 50px;
+}
+
+.rating-value {
+  font-family: IntroBlackItalic, serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 19.36px;
+  letter-spacing: -0.05em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.rating-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.rating-icon {
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+.reviews-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 25px;
+}
+
+.reviews-badge {
+  position: relative;
+  display: inline-block;
+}
+
+.reviews-image {
+  display: block;
+  width: 65px;
+  height: auto;
+}
+
+.reviews-count {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+  color: white;
+  font-family: IntroBlackItalic, serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 14.52px;
+  letter-spacing: -0.05em;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+
+}
+
+.reviews-text {
+  font-family: Geologica, serif;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 16.8px;
+  letter-spacing: -0.05em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #9399B9;
+}
+
+.executor {
+  font-family: Geologica, serif;
+  font-size: 16px;
+  font-weight: 200;
+  line-height: 19.2px;
+  letter-spacing: -0.02em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #000000;
+}
+
+.executor-name {
+  font-family: Geologica, serif;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 21.6px;
+  letter-spacing: -0.02em;
+  text-align: left;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-underline-offset: 20%;
+  text-decoration-thickness: 8%;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: auto;
+}
