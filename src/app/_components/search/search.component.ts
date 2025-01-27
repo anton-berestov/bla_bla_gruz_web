@@ -178,6 +178,7 @@ export class SearchComponent {
   }
 
   search() {
+    this.appService.isLoading = true
     this.appService.searchRoutes()
   }
 

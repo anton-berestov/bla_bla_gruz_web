@@ -7,5 +7,13 @@
     <app-blog></app-blog>
   </ng-container>
   <app-routes *ngIf="appService.routes.length"></app-routes>
+
+  <div *ngIf="appService.isLoading" style="height: 100vh">
+    <div class="loader-overlay">
+      <div class="spinner-border text-primary spinner-shadow" role="status">
+      </div>
+    </div>
+  </div>
+
 </main>
 <app-footer></app-footer>
