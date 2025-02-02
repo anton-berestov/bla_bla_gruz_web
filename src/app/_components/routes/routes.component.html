@@ -1,130 +1,163 @@
 <section class="mb-5">
   <div class="container mt-4">
-    <h3 class="mb-3">Завтра, 30 декабря</h3>
+    <h3 class="mb-3"> {{
+        formatDate()
+      }}</h3>
     <p class="pb-0 mb-0 text-muted">
-      Краснодарский край, Краснодар, Россия → Москва, Россия:
+      {{ appService.searchFromString }} → {{ appService.searchToString }}:
     </p>
-    <p class="pt-0 mt-0 text-muted">5 перевозчиков</p>
-    <div *ngFor="let route of appService.routes"
-         class="route-card d-flex align-items-center mb-3 p-0 rounded shadow-sm">
-      <div class="route-card-left me-3">
-        <div class="rating-badge">
-          <img src="assets/img/rating.svg" alt="rating" class="rating-image">
-          <div class="rating-overlay">
-            <span class="rating-icon">★</span>
-            <span class="rating-value">{{ route.account?.rating }}</span>
-          </div>
-        </div>
-        <div class="reviews-block">
-          <div class="reviews-badge">
-            <img src="assets/img/reviews.svg" alt="reviews" class="reviews-image">
-            <span class="reviews-count">{{ route.account?.reviews || '0' }}</span>
-          </div>
-          <div class="reviews-text">Отзывы</div>
-        </div>
-      </div>
-
-      <div class="route-card-middle flex-grow-1">
-        <div class="d-flex justify-content-between align-items-center">
-          <div>
-            <div class="d-flex flex-row align-items-center justify-content-start">
-              <img src="assets/img/steering-wheel-fill.svg" alt="steering"/>
-              <small class="text-muted text-center executor ms-2">Исполнитель</small>
+    <p class="pt-0 mt-0 text-muted">{{ routes.length + 1 }} перевозчиков</p>
+    <div *ngFor="let route of appService.routes; let i = index"
+         [ngClass]="activeIndex === i ? 'mb-0' : 'mb-3'">
+      <div
+        [ngStyle]="{'border-radius': activeIndex === i ? '10px 0 0 0' : '' }"
+        class="route-card d-flex align-items-center  p-0 rounded shadow-sm"
+      >
+        <div class="route-card-left me-3">
+          <div class="rating-badge">
+            <img src="assets/img/rating.svg" alt="rating" class="rating-image">
+            <div class="rating-overlay">
+              <span class="rating-icon">★</span>
+              <span class="rating-value">{{ route.account.rating }}</span>
             </div>
-            <a class="mb-1 text-primary text-center mt-1 cursor executor-name">{{ route.account.name }}</a>
           </div>
-        </div>
-      </div>
-
-      <div class="flex-sm-grow-1 line-result">
-        <div class="border"></div>
-      </div>
-
-      <div class="flex-grow-1">
-        <div class="route-info">
-          <div class="location-section">
-            <div class="line flex-row">
-              <div>
-                <div class="departure justify-content-start mb-2">
-                  <span class="time">{{ (+route.start.date) * 1000 | date:'HH:mm' }}</span>&nbsp;
-                  <span class="date">- {{ (+route.start.date) * 1000 | date:'dd.MM' }}</span>
-                </div>
-                <div class="line">
-                  <div class="circle"></div>
-                  <div class="line-bar"></div>
-                </div>
-                <div class="location mt-2">{{ route.start.point }}</div>
-              </div>
-              <div class="travel-time mx-1">
-                <span>{{ calculateTimeDifference(route.start.date, route.end.date) }}</span>
-              </div>
-              <div>
-                <div class="arrival justify-content-end mb-2">
-                  <span class="date">{{ (+route.end.date) * 1000| date:'dd.MM' }} -</span>&nbsp;
-                  <span class="time">{{ (+route.end.date) * 1000 | date:'HH:mm' }}</span>
-                </div>
-                <div class="line">
-                  <div class="line-bar"></div>
-                  <div class="arrow"></div>
-                </div>
-                <div class="location mt-2">{{ route.end.point }}</div>
-              </div>
+          <div class="reviews-block">
+            <div class="reviews-badge">
+              <img src="assets/img/reviews.svg" alt="reviews" class="reviews-image">
+              <span class="reviews-count">{{ route.account.reviews || '0' }}</span>
             </div>
+            <div class="reviews-text">Отзывы</div>
+          </div>
+        </div>
 
+        <div class="route-card-middle flex-grow-1">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="d-flex flex-row align-items-center justify-content-start">
+                <img src="assets/img/steering-wheel-fill.svg" alt="steering"/>
+                <small class="text-muted text-center executor ms-2">Исполнитель</small>
+              </div>
+              <a class="mb-1 text-primary text-center mt-1 cursor executor-name">{{ route.account.name }}</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-sm-grow-1 line-result">
+          <div class="border"></div>
+        </div>
+
+        <div class="flex-grow-1">
+          <div class="route-info">
+            <div class="location-section">
+              <div class="line flex-row">
+                <div>
+                  <div class="departure justify-content-start mb-2">
+                    <span class="time">{{ (+route.start.date) * 1000 | date:'HH:mm' }}</span>&nbsp;
+                    <span class="date">- {{ (+route.start.date) * 1000 | date:'dd.MM' }}</span>
+                  </div>
+                  <div class="line">
+                    <div class="circle"></div>
+                    <div class="line-bar"></div>
+                  </div>
+                  <div class="location mt-2">{{ route.start.point }}</div>
+                </div>
+                <div class="travel-time mx-1">
+                  <span>{{ calculateTimeDifference(route.start.date, route.end.date) }}</span>
+                </div>
+                <div>
+                  <div class="arrival justify-content-end mb-2">
+                    <span class="date">{{ (+route.end.date) * 1000| date:'dd.MM' }} -</span>&nbsp;
+                    <span class="time">{{ (+route.end.date) * 1000 | date:'HH:mm' }}</span>
+                  </div>
+                  <div class="line">
+                    <div class="line-bar"></div>
+                    <div class="arrow"></div>
+                  </div>
+                  <div class="location mt-2">{{ route.end.point }}</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="flex-sm-grow-1 line-result">
+          <div class="border"></div>
+        </div>
+
+        <div class="restrictions-block flex-grow-1">
+          <div class="icon d-flex align-items-center justify-content-center">
+            <img src="assets/img/weight-icon.svg" alt="Ограничения"/>
+            <div class="title">Ограничения</div>
+          </div>
+          <div class="text">
+            <div class="weight">до
+              <span *ngIf="route.start.weight">{{ route.start.weight }} кг</span>
+              <span *ngIf="!route.start.weight">-</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-sm-grow-1 line-result">
+          <div class="border"></div>
+        </div>
+
+        <div class=" flex-grow-1 d-flex align-items-center justify-content-center">
+          <img src="assets/img/bulk.svg" class="me-2" alt="bulk">
+          <!--        <img src="assets/img/bulk-active.svg" class="me-2" alt="bulk-active">-->
+          <img src="assets/img/breakable.svg" alt="breakable">
+          <!--        <img src="assets/img/breakable-active.svg" alt="breakable-active">-->
+        </div>
+
+        <div class="flex-sm-grow-1 line-result">
+          <div class="border"></div>
+        </div>
+
+        <div class="service-cost flex-grow-1">
+          <div class="title">Стоимость услуги</div>
+          <div class="cost">
+            <span class="amount me-3">{{ route.start.price }}</span>
+            <span class="unit">руб./кг.</span>
+          </div>
+        </div>
+
+        <div class="icon-block ms-3"
+             [ngStyle]="{'border-radius': activeIndex === i ? '10px 10px 0 0' : '10px' }">
+          <div class="icon top-icon cursor">
+            <img src="assets/img/chat.svg" alt="chat"/>
+          </div>
+          <hr class="divider"/>
+          <div (click)="toggleAdditional(i)"
+               class="icon bottom-icon cursor">
+            <img src="assets/img/route.svg" alt="route"/>
           </div>
         </div>
       </div>
-
-
-      <div class="flex-sm-grow-1 line-result">
-        <div class="border"></div>
-      </div>
-
-      <div class="restrictions-block flex-grow-1">
-        <div class="icon d-flex align-items-center justify-content-center">
-          <img src="assets/img/weight-icon.svg" alt="Ограничения"/>
-          <div class="title">Ограничения</div>
-        </div>
-        <div class="text">
-          <div class="weight">до
-            <span *ngIf="route.weight">{{ route.weight }} кг</span>
-            <span *ngIf="!route.weight">-</span>
+      <div *ngIf="activeIndex === i"
+           class="d-flex flex-row align-items-center justify-content-between additional-container p-4 mb-3"
+      >
+        <div class="col-2">
+          <div class="bg-orange-500 text-white">
+            <span class="font-semibold">Краснодар <span class="font-bold">(9:30)</span></span>
           </div>
         </div>
-      </div>
-
-      <div class="flex-sm-grow-1 line-result">
-        <div class="border"></div>
-      </div>
-
-      <div class=" flex-grow-1 d-flex align-items-center justify-content-center">
-        <img src="assets/img/bulk.svg" class="me-2" alt="bulk">
-        <!--        <img src="assets/img/bulk-active.svg" class="me-2" alt="bulk-active">-->
-        <img src="assets/img/breakable.svg" alt="breakable">
-        <!--        <img src="assets/img/breakable-active.svg" alt="breakable-active">-->
-      </div>
-
-      <div class="flex-sm-grow-1 line-result">
-        <div class="border"></div>
-      </div>
-
-      <div class="service-cost flex-grow-1">
-        <div class="title">Стоимость услуги</div>
-        <div class="cost">
-          <span class="amount me-3">{{ route.price }}</span>
-          <span class="unit">руб./кг.</span>
+        <div class="col">
+          <div class="line-container">
+            <div class="circle"></div>
+            <div class="line"></div>
+            <div class="circle"></div>
+          </div>
         </div>
-      </div>
 
-      <div class="icon-block ms-3">
-        <div class="icon top-icon">
-          <img src="assets/img/chat.svg" alt="chat"/>
-        </div>
-        <hr class="divider"/>
-        <div class="icon bottom-icon">
-          <img src="assets/img/route.svg" alt="route"/>
+        <div class="col-2">
+          <div class="bg-orange-500 text-white align-end">
+            <span class="font-semibold">Краснодар <span class="font-bold">(9:30)</span></span>
+          </div>
         </div>
       </div>
     </div>
+
+
   </div>
 </section>

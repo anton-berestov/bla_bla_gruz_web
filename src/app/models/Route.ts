@@ -1,15 +1,31 @@
 import { Account } from './Account';
 
 export interface Route {
-  route: string;
-  weight: string;
-  price: string;
+  start: StartPoint;
+  checkpoints?: Checkpoint[];
+  end: EndPoint;
+  cargoes?: any[];
   account: Account;
-  start: PointDetails;
-  end: PointDetails;
 }
 
-interface PointDetails {
+export interface StartPoint {
+  route: string;
+  point: string;
+  weight?: string;
+  date: string;
+  price?: string;
+  size?: string;
+  comment?: string;
+  account: string;
+}
+
+export interface Checkpoint {
   point: string;
   date: string;
 }
+
+export interface EndPoint {
+  point: string;
+  date: string;
+}
+

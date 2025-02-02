@@ -1,24 +1,34 @@
 import { Component } from '@angular/core';
 import { AppService } from '../../app.service';
-import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
+import { routes } from '../../app.routes';
+import moment from 'moment';
+import 'moment/locale/ru'
 
 @Component({
   selector: 'app-routes',
   imports: [
     NgForOf,
     DatePipe,
-    NgIf
+    NgIf,
+    NgClass,
+    NgStyle,
   ],
   templateUrl: './routes.component.html',
   styleUrl: './routes.component.scss'
 })
 export class RoutesComponent {
   constructor(protected appService: AppService) {
+    moment.locale('ru');
   }
 
-  formatDate(timestamp: string): string {
-    const date = new Date(Number(timestamp) * 1000);
-    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')} (${date.toLocaleDateString()})`;
+  public activeIndex: number | null = null;
+
+  formatDate(): string {
+    const timestamp = this.appService.searchDate * 1000;
+    let formattedDate: string;
+    formattedDate = moment(timestamp).format('dddd, D MMMM');
+    return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
   }
 
   calculateTimeDifference(date1: string, date2: string): string {
@@ -33,4 +43,11 @@ export class RoutesComponent {
 
     return `${hours}:${minutes.toString().padStart(2, '0')}`;
   }
+
+  toggleAdditional(index: number) {
+    this.activeIndex = this.activeIndex === index ? null : index;
+  }
+
+  protected readonly routes = routes;
+  protected readonly moment = moment;
 }

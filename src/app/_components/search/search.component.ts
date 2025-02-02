@@ -61,7 +61,6 @@ export class SearchComponent {
 
   private initializeAutocomplete(): void {
     if (typeof window !== 'undefined' && window.google) {
-      console.log('Google Maps API загружен');
       this.autocomplete = new google.maps.places.AutocompleteService();
 
       this.where.nativeElement.addEventListener('input', () => {
@@ -141,6 +140,7 @@ export class SearchComponent {
       this.where.nativeElement,
       (location) => {
         this.appService.searchWhere = location;
+        this.appService.searchToString = suggestion.description
       },
       () => {
         this.suggestionsWhere = [];
@@ -154,6 +154,7 @@ export class SearchComponent {
       this.from.nativeElement,
       (location) => {
         this.appService.searchFrom = location;
+        this.appService.searchFromString = suggestion.description
       },
       () => {
         this.suggestionsFrom = [];

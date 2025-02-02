@@ -7,14 +7,12 @@ import { StoreComponent } from './_components/store/store.component';
 import { BlogComponent } from './_components/blog/blog.component';
 import { AppService } from './app.service';
 import { HttpClient } from '@angular/common/http';
-import { CargoType } from './models/CargoType';
 import { NgIf } from '@angular/common';
 import { RoutesComponent } from './_components/routes/routes.component';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-root',
-  imports: [ HeaderComponent, FooterComponent, SearchComponent, AdvantagesComponent, StoreComponent, BlogComponent, NgIf, RoutesComponent, MatProgressSpinner ],
+  imports: [ HeaderComponent, FooterComponent, SearchComponent, AdvantagesComponent, StoreComponent, BlogComponent, NgIf, RoutesComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [ HttpClient ]

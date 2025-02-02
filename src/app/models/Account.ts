@@ -1,5 +1,7 @@
 export interface Account {
   name: string;
-  rating: number;
-  reviews?: number;
+  rating: string;
+  reviews?: string;
+  account: string,
+  photo?: string
 }
