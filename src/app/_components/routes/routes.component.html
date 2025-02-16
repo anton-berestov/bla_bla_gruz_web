@@ -6,13 +6,18 @@
     <p class="pb-0 mb-0 text-muted">
       {{ appService.searchFromString }} → {{ appService.searchToString }}:
     </p>
-    <p class="pt-0 mt-0 text-muted">{{ routes.length + 1 }} перевозчиков</p>
+    <p
+      class="pt-0 mt-0 text-muted">{{ appService.routes.length }} {{ appService.routes.length == 0 ? 'перевозчиков' : appService.routes.length == 1 ? 'перевозчик' : appService.routes.length < 5 ? 'перевозчика' : 'перевозчиков' }}</p>
     <div *ngFor="let route of appService.routes; let i = index"
          [ngClass]="activeIndex === i ? 'mb-0' : 'mb-3'">
       <div
         [ngStyle]="{'border-radius': activeIndex === i ? '10px 0 0 0' : '' }"
         class="route-card d-flex align-items-center  p-0 rounded shadow-sm"
       >
+        <div class="image-container">
+          <img [src]="route.account.photo" alt="photo" class="full-height"
+               [ngStyle]="{'border-radius': activeIndex === i ? '10px 0 0 0' : '' }">
+        </div>
         <div class="route-card-left me-3">
           <div class="rating-badge">
             <img src="assets/img/rating.svg" alt="rating" class="rating-image">
@@ -97,6 +102,7 @@
               <span *ngIf="!route.start.weight">-</span>
             </div>
           </div>
+          <div class="small" *ngIf="route.start.size">{{ route.start.size }} (см)</div>
         </div>
 
         <div class="flex-sm-grow-1 line-result">
@@ -104,10 +110,14 @@
         </div>
 
         <div class=" flex-grow-1 d-flex align-items-center justify-content-center">
-          <img src="assets/img/bulk.svg" class="me-2" alt="bulk">
-          <!--        <img src="assets/img/bulk-active.svg" class="me-2" alt="bulk-active">-->
-          <img src="assets/img/breakable.svg" alt="breakable">
-          <!--        <img src="assets/img/breakable-active.svg" alt="breakable-active">-->
+          <img src="assets/img/loose.svg" class="me-2" alt="bulk" *ngIf="!route.cargoes?.includes('Сыпучие')"
+               ngbTooltip="Сыпучие">
+          <img src="assets/img/loose-active.svg" class="me-2" alt="bulk-active"
+               *ngIf="route.cargoes?.includes('Сыпучие')" ngbTooltip="Сыпучие">
+          <img src="assets/img/breakable.svg" alt="breakable" *ngIf="!route.cargoes?.includes('Бьющиеся')"
+               ngbTooltip="Бьющиеся">
+          <img src="assets/img/breakable-active.svg" alt="breakable-active" *ngIf="route.cargoes?.includes('Бьющиеся')"
+               ngbTooltip="Бьющиеся">
         </div>
 
         <div class="flex-sm-grow-1 line-result">
@@ -135,14 +145,19 @@
         </div>
       </div>
       <div *ngIf="activeIndex === i"
-           class="d-flex flex-row align-items-center justify-content-between additional-container p-4 mb-3"
-      >
-        <div class="col-2">
-          <div class="bg-orange-500 text-white">
-            <span class="font-semibold">Краснодар <span class="font-bold">(9:30)</span></span>
+           class="d-flex align-items-center justify-content-between additional-container py-4 mb-3">
+
+        <div class="col-2 d-flex flex-column align-items-center">
+          <div class="text-white text-center p-2 rounded" style="background: #F66735">
+            <span>
+              {{ route.start.point.split(',')[0] }}
+              <span class="font-bold">({{ (+route.start.date) * 1000 | date:'HH:mm' }}) - </span>
+              <span class="date">{{ (+route.start.date) * 1000| date:'dd.MM' }}</span>&nbsp;
+            </span>
           </div>
         </div>
-        <div class="col">
+
+        <div class="col flex-grow-1 d-flex align-items-center" *ngIf="route.checkpoints?.length">
           <div class="line-container">
             <div class="circle"></div>
             <div class="line"></div>
@@ -150,9 +165,41 @@
           </div>
         </div>
 
-        <div class="col-2">
-          <div class="bg-orange-500 text-white align-end">
-            <span class="font-semibold">Краснодар <span class="font-bold">(9:30)</span></span>
+        <ng-container *ngFor="let checkpoint of route.checkpoints; let last = last">
+          <div class="d-flex flex-column align-items-center">
+            <div class="text-black text-center p-2 rounded" style="background: #FFFFFF">
+              <span>
+                {{ checkpoint.point.split(',')[0] }}
+                <span class="font-bold">({{ (+checkpoint.date) * 1000 | date:'HH:mm' }}) - </span>
+                 <span class="date">{{ (+checkpoint.date) * 1000| date:'dd.MM' }}</span>&nbsp;
+              </span>
+            </div>
+          </div>
+
+          <div *ngIf="!last" class="col flex-grow-1 d-flex align-items-center">
+            <div class="line-container">
+              <div class="circle"></div>
+              <div class="line"></div>
+              <div class="circle"></div>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="col flex-grow-1 d-flex align-items-center">
+          <div class="line-container">
+            <div class="circle"></div>
+            <div class="line"></div>
+            <div class="circle"></div>
+          </div>
+        </div>
+
+        <div class="col-2 d-flex flex-column align-items-center">
+          <div class="text-white text-center p-2 rounded" style="background: #F66735">
+            <span>
+              {{ route.end.point.split(',')[0] }}
+              <span class="font-bold">({{ (+route.end.date) * 1000 | date:'HH:mm' }}) - </span>
+               <span class="date">{{ (+route.end.date) * 1000| date:'dd.MM' }}</span>&nbsp;
+            </span>
           </div>
         </div>
       </div>

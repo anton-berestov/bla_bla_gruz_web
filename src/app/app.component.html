@@ -1,5 +1,7 @@
+<app-toast></app-toast>
 <app-header></app-header>
 <main>
+  <ng-template #successTpl> I'm a success toast </ng-template>
   <app-search></app-search>
   <ng-container *ngIf="!appService.routes.length">
     <app-advantages></app-advantages>

@@ -4,6 +4,8 @@ import { DatePipe, NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { routes } from '../../app.routes';
 import moment from 'moment';
 import 'moment/locale/ru'
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-routes',
@@ -13,6 +15,7 @@ import 'moment/locale/ru'
     NgIf,
     NgClass,
     NgStyle,
+    NgbTooltip,
   ],
   templateUrl: './routes.component.html',
   styleUrl: './routes.component.scss'
@@ -47,7 +50,4 @@ export class RoutesComponent {
   toggleAdditional(index: number) {
     this.activeIndex = this.activeIndex === index ? null : index;
   }
-
-  protected readonly routes = routes;
-  protected readonly moment = moment;
 }

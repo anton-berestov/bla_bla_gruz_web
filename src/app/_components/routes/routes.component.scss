@@ -4,6 +4,27 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.image-container {
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  border-radius: 10px;
+}
+
+.full-height {
+  height: 120px;
+  width: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  clip-path: polygon(0% 0%, 96% 0%, 75% 100%, 0% 100%);
+  z-index: 9999;
+}
+
+.route-card-left {
+  height: 120px;
+  margin-left: -30px;
+}
+
 .rating-badge {
   position: relative;
   width: 100px;
@@ -366,4 +387,8 @@
   flex-grow: 1;
   background-color: white;
   border: none;
+}
+
+.mat-tooltip-panel {
+  overflow: visible !important;
 }

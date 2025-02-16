@@ -46,6 +46,13 @@
 
   <div class="col-12 col-md-auto float-end">
     <button
+      *ngIf="width || height || length"
+      type="button" class="btn btn-danger px-4 fw-bold me-3"
+      (click)="clear()"
+    >
+      Сбросить
+    </button>
+    <button
       [disabled]="!width || !height || !length"
       type="button" class="btn btn-primary px-4 fw-bold"
       (click)="apply()"

@@ -97,3 +97,17 @@ body {
 .align-end {
   text-align: end;
 }
+
+.ngb-dp-weekday {
+  color: #31357B !important;
+}
+
+.btn-link {
+  color: #31357B !important;
+}
+
+.ngb-dp-day[aria-pressed="true"],
+.ngb-dp-day[aria-pressed="true"] > div {
+  background-color: #ff9800 !important;
+  color: white !important;
+}

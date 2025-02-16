@@ -26,7 +26,7 @@
             aria-label="Откуда"
             #from
           />
-          <div *ngIf="suggestionsFrom.length" class="position-absolute w-100 top-10" style="z-index: 999; top: 50px">
+          <div *ngIf="suggestionsFrom.length" class="position-absolute w-100 top-10" style="z-index: 99999; top: 50px">
             <ul class="list-group">
               <li
                 class="list-group-item"
@@ -79,6 +79,7 @@
             ngbDatepicker
             #d="ngbDatepicker"
             (dateSelect)="d.close(); onDateSelect($event); "
+            [minDate]="minDate"
           />
         </div>
       </div>
@@ -108,6 +109,7 @@
             class="form-control border-0"
             placeholder="Вес"
             aria-label="Вес"
+            [(ngModel)]="appService.searchWeight"
           />
           <span class="input-group-text bg-light border-0 radius-right">кг</span>
         </div>
@@ -132,8 +134,9 @@
 
       <div class="col-12 col-md-auto">
         <button
-          type="button" class="btn btn-primary px-4 fw-bold"
-          [disabled]="!appService.searchDate && !appService.searchWhere && !appService.searchFrom"
+          type="button"
+          class="btn btn-primary px-4 fw-bold"
+          [disabled]="!appService.searchDate || !appService.searchWhere.lat || !appService.searchWhere.lng || !appService.searchFrom.lat || !appService.searchFrom.lng"
           (click)="search()"
         >
           Поиск

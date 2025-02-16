@@ -44,3 +44,9 @@
     margin-left: auto;
   }
 }
+
+.dropdown-item.active, .dropdown-item:active {
+  color: black;
+  text-decoration: none;
+  background-color: transparent;
+}

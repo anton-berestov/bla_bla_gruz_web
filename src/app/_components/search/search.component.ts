@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { AppService } from '../../app.service';
-import { NgbDate, NgbDatepickerModule, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbDatepickerModule, NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { AsyncPipe, isPlatformBrowser, NgForOf, NgIf } from '@angular/common';
 import { GoogleMapsModule } from '@angular/google-maps'
 import {
@@ -33,11 +33,14 @@ export class SearchComponent {
   autocomplete!: google.maps.places.AutocompleteService;
 
   readonly dialog = inject(MatDialog);
+  public minDate: NgbDateStruct;
 
   private googleApiKey = environment.googleApiKey;
 
 
   constructor(protected appService: AppService, @Inject(PLATFORM_ID) private platformId: any) {
+    const today = new Date();
+    this.minDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
   }
 
   ngAfterViewInit(): void {

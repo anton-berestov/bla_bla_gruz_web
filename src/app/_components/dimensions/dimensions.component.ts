@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppService } from '../../app.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-dimensions',
   imports: [
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './dimensions.component.html',
   styleUrl: './dimensions.component.scss'
@@ -45,5 +47,12 @@ export class DimensionsComponent {
   apply() {
     this.appService.searchSize = `${this.length}x${this.width}x${this.height}`
     this.dialogRef.close(false)
+  }
+
+  clear() {
+    this.length = ''
+    this.width = ''
+    this.height = ''
+    this.appService.searchSize = ''
   }
 }

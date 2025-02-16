@@ -28,7 +28,7 @@
       <div class="collapse navbar-collapse" id="navbarMenu">
         <ul class="navbar-nav ms-auto">
           <!-- Мои маршруты -->
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="isAuth">
             <a class="nav-link d-flex align-items-center" href="#my-routes">
               <img
                 src="assets/img/routes.svg"
@@ -40,7 +40,7 @@
           </li>
 
           <!-- Создать маршрут -->
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="isAuth">
             <a class="nav-link d-flex align-items-center" href="#create-route">
               <img
                 src="assets/img/add-route.svg"
@@ -51,10 +51,28 @@
             </a>
           </li>
 
-          <!-- Личный кабинет -->
-          <li class="nav-item">
-            <a class="nav-link" href="#profile">Личный кабинет</a>
+          <li ngbDropdown class="nav-item" role="presentation" *ngIf="!isAuth">
+            <button type="button" class="nav-link" ngbDropdownToggle>Профиль</button>
+            <div ngbDropdownMenu>
+              <a class="nav-link d-flex align-items-center" href="#profile" ngbDropdownItem (click)="open()">
+                <span class="ms-2">Авторизация</span>
+              </a>
+            </div>
           </li>
+
+          <li ngbDropdown class="nav-item" role="presentation" *ngIf="isAuth">
+            <button type="button" class="nav-link" ngbDropdownToggle>Профиль</button>
+            <div ngbDropdownMenu>
+              <a class="nav-link d-flex align-items-center" href="#profile" ngbDropdownItem (click)="logout()">
+                <span class="ms-2">Выйти</span>
+              </a>
+            </div>
+          </li>
+<!--          <li class="nav-item" *ngIf="isAuth">-->
+<!--            <a class="nav-link d-flex align-items-center" href="#profile">-->
+<!--              <span class="ms-2">Профиль</span>-->
+<!--            </a>-->
+<!--          </li>-->
         </ul>
       </div>
     </nav>
