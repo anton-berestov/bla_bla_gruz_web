@@ -6,6 +6,7 @@ import { MatInput } from '@angular/material/input';
 import { NgxMaskDirective } from 'ngx-mask';
 import { AppService } from '../../app.service';
 import { AuthService } from '../../auth.service';
+import { LoginModalService } from './login-modal.service';
 
 @Component({
   selector: 'app-login-modal',
@@ -24,7 +25,7 @@ export class LoginModalComponent {
   private modalService = inject(NgbModal);
   private authService = inject(AuthService)
   private fb = inject(FormBuilder)
-  private appService = inject(AppService)
+  private loginModalService = inject(LoginModalService)
 
 
   public isSms: boolean = false
@@ -55,7 +56,7 @@ export class LoginModalComponent {
     const data = form.value;
     data.phone = `7${data.phone}`;
 
-    this.appService.login(data).subscribe((response) => {
+    this.loginModalService.login(data).subscribe((response) => {
       if (response.result) {
         this.isSms = true
       }
@@ -69,7 +70,7 @@ export class LoginModalComponent {
       account: localStorage.getItem('accountId'),
       key: form.value.key
     }
-    this.appService.checkService(data).subscribe((data: any) => {
+    this.loginModalService.checkService(data).subscribe((data: any) => {
       if (data.result == 1) {
         this.modalService.dismissAll(LoginModalComponent);
         this.authService.updateAuthStatus()

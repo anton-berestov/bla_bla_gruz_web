@@ -2,12 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { CargoType } from './models/CargoType';
-import { BehaviorSubject, Observable, of, switchMap, Timestamp } from 'rxjs';
+import { Observable, of, switchMap, Timestamp } from 'rxjs';
 import { objToFormData } from './helpers/form';
 import { Route } from './models/Route';
 import { SearchData } from './models/SearchData';
 import { ToastService } from './_components/toast/toast.service';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -136,24 +135,5 @@ export class AppService {
         console.error('Error:', error);
       }
     );
-  }
-
-  login(value: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}user/auth`, objToFormData(value)).pipe(
-      switchMap((data: any) => {
-        if (data != null && data.error == 0) {
-          localStorage.setItem('accountId', data.account)
-          return this.http.post(`${this.baseUrl}user/get_auth_key`, objToFormData({
-            account: data.account,
-            country: 'RU'
-          }));
-        }
-        return of(data);
-      })
-    );
-  }
-
-  checkService(value: any) {
-    return this.http.post(`${this.baseUrl}user/check_auth_code`, objToFormData(value))
   }
 }

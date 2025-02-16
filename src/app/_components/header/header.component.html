@@ -63,16 +63,19 @@
           <li ngbDropdown class="nav-item" role="presentation" *ngIf="isAuth">
             <button type="button" class="nav-link" ngbDropdownToggle>Профиль</button>
             <div ngbDropdownMenu>
-              <a class="nav-link d-flex align-items-center" href="#profile" ngbDropdownItem (click)="logout()">
-                <span class="ms-2">Выйти</span>
-              </a>
+              <button class="nav-link d-flex align-items-center" href="#profile" ngbDropdownItem (click)="getProfile()">
+                Профиль
+              </button>
+              <button class="nav-link d-flex align-items-center" href="#profile" ngbDropdownItem (click)="logout()">
+                Выйти
+              </button>
             </div>
           </li>
-<!--          <li class="nav-item" *ngIf="isAuth">-->
-<!--            <a class="nav-link d-flex align-items-center" href="#profile">-->
-<!--              <span class="ms-2">Профиль</span>-->
-<!--            </a>-->
-<!--          </li>-->
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="#profile">
+              <span class="ms-2"></span>
+            </a>
+          </li>
         </ul>
       </div>
     </nav>

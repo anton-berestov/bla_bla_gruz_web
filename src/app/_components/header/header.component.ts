@@ -4,6 +4,7 @@ import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { NgIf } from '@angular/common';
 import { AppService } from '../../app.service';
 import { AuthService } from '../../auth.service';
+import { ProfileModalComponent } from '../profile-modal/profile-modal.component';
 
 @Component({
   selector: 'app-header',
@@ -37,6 +38,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout() {
     localStorage.removeItem('accountId')
     this.authService.updateAuthStatus()
+  }
+
+  getProfile() {
+    this.modalService.open(ProfileModalComponent);
   }
 
   ngOnDestroy(): void {
