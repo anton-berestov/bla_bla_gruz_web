@@ -1,23 +1,21 @@
 /* Importing Bootstrap SCSS file. */
-@use 'bootstrap/scss/bootstrap';
-
+@use "bootstrap/scss/bootstrap";
 
 @font-face {
-  font-family: 'Geologica';
+  font-family: "Geologica";
   font-style: normal;
   font-weight: 400;
-  src: url('assets/fonts/Geologica-Medium.ttf'),
-  url('assets/fonts/Geologica-Regular.ttf'),
-  url('assets/fonts/Geologica-Bold.ttf'),
-  url('assets/fonts/Geologica-SemiBold.ttf'),
-  url('assets/fonts/Geologica-Thin.ttf')
-
+  src: url("assets/fonts/Geologica-Medium.ttf"),
+    url("assets/fonts/Geologica-Regular.ttf"),
+    url("assets/fonts/Geologica-Bold.ttf"),
+    url("assets/fonts/Geologica-SemiBold.ttf"),
+    url("assets/fonts/Geologica-Thin.ttf");
 }
 
 @font-face {
-  font-family: 'IntroBlackItalic';
+  font-family: "IntroBlackItalic";
   font-style: normal;
-  src: url('assets/fonts/IntroBlackItalic.ttf');
+  src: url("assets/fonts/IntroBlackItalic.ttf");
 }
 
 .subtitle {
@@ -29,7 +27,7 @@
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  color: #3838F5;
+  color: #3838f5;
 }
 
 input:focus {
@@ -37,7 +35,7 @@ input:focus {
 }
 
 body {
-  font-family: 'Geologica', serif;
+  font-family: "Geologica", serif;
 }
 
 .cursor {
@@ -52,7 +50,7 @@ body {
 
 .form-control {
   border-radius: 0 10px 10px 0;
-  background-color: #F6F7FC;
+  background-color: #f6f7fc;
   padding: 10px 20px;
 }
 
@@ -68,7 +66,7 @@ body {
 }
 
 .text-primary {
-  color: #3838F5
+  color: #3838f5;
 }
 
 .radius-right {
@@ -99,15 +97,23 @@ body {
 }
 
 .ngb-dp-weekday {
-  color: #31357B !important;
+  color: #31357b !important;
 }
 
 .btn-link {
-  color: #31357B !important;
+  color: #31357b !important;
 }
 
 .ngb-dp-day[aria-pressed="true"],
 .ngb-dp-day[aria-pressed="true"] > div {
   background-color: #ff9800 !important;
   color: white !important;
+}
+
+.modal-backdrop {
+  z-index: 1040 !important;
+}
+
+.modal {
+  z-index: 1041 !important;
 }

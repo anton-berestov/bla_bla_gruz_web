@@ -1,0 +1,164 @@
+<div class="modal-header">
+  <h4 class="modal-title">Создать маршрут</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="routeForm" novalidate>
+    <div class="col-12 col-xl mb-3 mb-xl-0">
+      <div>Введите информацию о месте и дате отправки</div>
+      <div class="input-group mb-3">
+        <span class="input-group-text bg-light border-0">
+          <i class="bi bi-geo-alt"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control border-0 px-0"
+          placeholder="Откуда*"
+          aria-label="Откуда*"
+          #from
+        />
+        <div *ngIf="suggestionsFrom.length" class="position-absolute w-100 top-10" style="z-index: 99999; top: 50px">
+          <ul class="list-group">
+            <li
+              class="list-group-item"
+              *ngFor="let suggestion of suggestionsFrom"
+              (click)="selectSuggestionFrom(suggestion)"
+            >
+              {{ suggestion.description }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-12 col-xl mb-3 mb-xl-0" (click)="c.open()">
+        <div class="input-group">
+          <span class="input-group-text bg-light border-0 cursor">
+            <i class="bi bi-calendar-event"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control border-0 px-0"
+            placeholder="Сегодня*"
+            aria-label="Сегодня*"
+            ngbDatepicker
+            #c="ngbDatepicker"
+            (dateSelect)="onDateSelect($event, c, 'start_date');"
+            [minDate]="minDate"
+          />
+        </div>
+      </div>
+      <div class="col-12 col-xl mt-3 mb-3 mb-xl-0">
+        <div class="input-group">
+          <span class="input-group-text bg-light border-0">
+            <i class="bi bi-clock"></i>
+          </span>
+          <ngb-timepicker formControlName="start_time" class="form-control border-0" aria-placeholder="Время*"/>
+        </div>
+      </div>
+
+      <div class="mt-5">Введите информацию о месте и дате прибытия</div>
+      <div class="input-group mt-3">
+          <span class="input-group-text bg-light border-0">
+          <i class="bi bi-geo-alt"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control border-0 px-0"
+          placeholder="Куда*"
+          aria-label="Куда*"
+          #where
+        />
+        <div *ngIf="suggestionsWhere.length" class="position-absolute w-100" style="z-index: 999; top: 50px">
+          <ul class="list-group">
+            <li
+              class="list-group-item"
+              *ngFor="let suggestion of suggestionsWhere"
+              (click)="selectSuggestionWhere(suggestion)"
+            >
+              {{ suggestion.description }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-12 col-xl mt-3 mb-3 mb-xl-0" (click)="d.open()">
+        <div class="input-group">
+          <span class="input-group-text bg-light border-0 cursor">
+            <i class="bi bi-calendar-event"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control border-0 px-0"
+            placeholder="Сегодня*"
+            aria-label="Сегодня*"
+            ngbDatepicker
+            #d="ngbDatepicker"
+            (dateSelect)="onDateSelect($event, d, 'end_date');"
+            [minDate]="minDate"
+          />
+        </div>
+      </div>
+      <div class="col-12 col-xl mt-3 mb-3 mb-xl-0">
+        <div class="input-group">
+          <span class="input-group-text bg-light border-0">
+            <i class="bi bi-clock"></i>
+          </span>
+          <ngb-timepicker formControlName="end_time" class="form-control border-0" aria-placeholder="Время*"/>
+        </div>
+      </div>
+      <div class="col-12 col-xl mt-3 mb-3 mb-xl-0">
+        <div class="input-group">
+          <span class="input-group-text bg-light border-0">
+            <i class="bi bi-bag-fill"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control border-0 px-0"
+            placeholder="Вес груза"
+            aria-label="Вес груза"
+            formControlName="weight"
+          />
+          <span class="input-group-text bg-light border-0">
+            <span>кг.</span>
+          </span>
+
+          <span class="input-group-text bg-light border-0">
+            <i class="bi bi-box-fill"></i>
+          </span>
+          <input
+            (click)="openDimensions()"
+            type="text"
+            class="form-control border-0 ml-3 px-0"
+            placeholder="Габариты груза"
+            aria-label="Габариты груза"
+          />
+          <span class="input-group-text bg-light border-0 radius-right">
+            <span>см</span>
+          </span>
+        </div>
+      </div>
+      <div class="col-12 col-xl mt-3 mb-3 mb-xl-0">
+        <div class="input-group">
+          <span class="input-group-text bg-light border-0">
+            <i class="bi bi-credit-card-fill"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control border-0 px-0"
+            placeholder="Цена груза"
+            aria-label="Цена груза"
+            formControlName="price"
+          />
+          <span class="input-group-text bg-light border-0 radius-right">
+            <span>Руб/кг.</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-danger" (click)="activeModal.close('Close click')">Закрыть</button>
+  <button [disabled]="!routeForm.valid" type="button" class="btn btn-outline-secondary" (click)="createRoute()">Создать
+    заказ
+  </button>
+</div>

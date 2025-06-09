@@ -9,14 +9,15 @@ export interface Route {
 }
 
 export interface StartPoint {
-  route: string;
+  route?: string;
   point: string;
-  weight?: string;
+  weight?: string | number;
   date: string;
-  price?: string;
+  price?: string | number;
   size?: string;
   comment?: string;
   account: string;
+  coordinates?: string
 }
 
 export interface Checkpoint {
@@ -27,5 +28,6 @@ export interface Checkpoint {
 export interface EndPoint {
   point: string;
   date: string;
+  coordinates?: string
 }
 

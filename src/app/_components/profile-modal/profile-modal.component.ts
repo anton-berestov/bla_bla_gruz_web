@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
+import { JsonPipe, NgIf } from '@angular/common';
 import { NgxMaskDirective } from 'ngx-mask';
-import { NgbActiveModal, NgbDate, NgbInputDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDate, NgbDateStruct, NgbInputDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileService } from './profile.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile-modal',
@@ -13,7 +14,7 @@ import { ProfileService } from './profile.service';
     MatInput,
     NgxMaskDirective,
     ReactiveFormsModule,
-    NgbInputDatepicker
+    NgbInputDatepicker,
   ],
   templateUrl: './profile-modal.component.html',
   styleUrl: './profile-modal.component.scss'
@@ -39,13 +40,24 @@ export class ProfileModalComponent implements OnInit {
     });
 
     this.profileService.getProfile().subscribe((data: any) => {
+      const birthday = data.birthday ? new Date(Number(data.birthday)*1000) : null;
+
+      const birthdayStruct: NgbDateStruct | null = birthday
+        ? {
+          year: birthday.getFullYear(),
+          month: birthday.getMonth() + 1,
+          day: birthday.getDate(),
+        }
+        : null;
+
       this.userForm.patchValue({
         name: data.name || '',
         surname: data.surname || '',
         phone: data.phone || '',
         photo: data.photo || '',
         email: data.email || '',
-        rating: data.rating || 0
+        rating: data.rating || 0,
+        birthday: birthdayStruct,
       });
     });
   }
@@ -71,8 +83,9 @@ export class ProfileModalComponent implements OnInit {
       surname: form.value.surname,
       phone: `7${form.value.phone}`,
       email: form.value.email,
-      birthday: form.value.birthday,
+      birthday: this.onDate(form.value.birthday),
       account: localStorage.getItem('accountId'),
+      photo: form.value.photo
     }
 
     this.profileService.updateProfile(data).subscribe((data) => {
@@ -80,8 +93,8 @@ export class ProfileModalComponent implements OnInit {
     })
   }
 
-  onDateSelect(date: NgbDate): void {
+  onDate(date: NgbDate): number {
     const newDate = new Date(date.year, date.month - 1, date.day);
-    this.userForm.get('birthday')?.setValue(Math.floor(newDate.getTime() / 1000));
+    return Math.floor(newDate.getTime() / 1000)
   }
 }

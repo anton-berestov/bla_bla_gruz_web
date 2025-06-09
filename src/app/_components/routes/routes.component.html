@@ -81,7 +81,6 @@
                   <div class="location mt-2">{{ route.end.point }}</div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -134,7 +133,7 @@
 
         <div class="icon-block ms-3"
              [ngStyle]="{'border-radius': activeIndex === i ? '10px 10px 0 0' : '10px' }">
-          <div class="icon top-icon cursor">
+          <div class="icon top-icon cursor" (click)="isAuth ? openChat(route) : openLoginModal()">
             <img src="assets/img/chat.svg" alt="chat"/>
           </div>
           <hr class="divider"/>
@@ -204,7 +203,5 @@
         </div>
       </div>
     </div>
-
-
   </div>
 </section>

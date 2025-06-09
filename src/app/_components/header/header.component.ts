@@ -5,6 +5,8 @@ import { NgIf } from '@angular/common';
 import { AppService } from '../../app.service';
 import { AuthService } from '../../auth.service';
 import { ProfileModalComponent } from '../profile-modal/profile-modal.component';
+import { CreateRouteModalComponent } from '../create-route-modal/create-route-modal.component';
+import { RoutesModalComponent } from '../routes-modal/routes-modal.component';
 
 @Component({
   selector: 'app-header',
@@ -42,6 +44,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   getProfile() {
     this.modalService.open(ProfileModalComponent);
+  }
+
+  createRoute() {
+    this.modalService.open(CreateRouteModalComponent);
+  }
+
+  openRoutes() {
+    this.modalService.open(RoutesModalComponent);
   }
 
   ngOnDestroy(): void {

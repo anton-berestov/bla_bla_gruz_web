@@ -136,4 +136,8 @@ export class AppService {
       }
     );
   }
+
+  getRoutes() {
+    return this.http.post<{ routes: Route[] }>(`${this.baseUrl}routes/get_my_routes_list`, objToFormData({ account: localStorage.getItem('accountId') }));
+  }
 }

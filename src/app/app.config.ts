@@ -3,18 +3,23 @@ import {
   importProvidersFrom,
   Injectable,
   LOCALE_ID,
-  provideZoneChangeDetection
+  provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-import { NgbDateParserFormatter, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import ruLocale from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import ruLocale from '@angular/common/locales/ru';
+import {
+  provideClientHydration,
+  withEventReplay,
+} from '@angular/platform-browser';
+import {
+  NgbDateParserFormatter,
+  NgbDatepickerModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { provideNgxMask } from 'ngx-mask';
-
+import { routes } from './app.routes';
 
 registerLocaleData(ruLocale, 'ru');
 @Injectable({ providedIn: 'root' })
@@ -45,5 +50,5 @@ export const appConfig: ApplicationConfig = {
     { provide: LOCALE_ID, useValue: 'ru' },
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
     provideNgxMask(),
-  ]
+  ],
 };

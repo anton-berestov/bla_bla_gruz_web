@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AppService } from '../../app.service';
 import { DatePipe, NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { routes } from '../../app.routes';
 import moment from 'moment';
 import 'moment/locale/ru'
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../../auth.service';
+import { LoginModalComponent } from '../login-modal/login-modal.component';
 
 @Component({
   selector: 'app-routes',
@@ -20,12 +22,23 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './routes.component.html',
   styleUrl: './routes.component.scss'
 })
-export class RoutesComponent {
+export class RoutesComponent implements OnInit{
+  private authService = inject(AuthService)
+  private modalService = inject(NgbModal);
+
   constructor(protected appService: AppService) {
     moment.locale('ru');
   }
 
-  public activeIndex: number | null = null;
+
+  protected activeIndex: number | null = null;
+  protected isAuth: boolean = false;
+
+  ngOnInit(): void {
+    this.authService.isAuth$.subscribe(auth => {
+      this.isAuth = auth;
+    });
+  }
 
   formatDate(): string {
     const timestamp = this.appService.searchDate * 1000;
@@ -49,5 +62,13 @@ export class RoutesComponent {
 
   toggleAdditional(index: number) {
     this.activeIndex = this.activeIndex === index ? null : index;
+  }
+
+  openChat(value: any) {
+
+  }
+
+  openLoginModal() {
+    this.modalService.open(LoginModalComponent);
   }
 }

@@ -19,7 +19,9 @@ export class DimensionsComponent {
   protected width: string = ''
   protected height: string = ''
 
-  constructor(protected appService: AppService, public dialogRef: MatDialogRef<DimensionsComponent>,) {
+  constructor(
+    protected appService: AppService,
+    public dialogRef: MatDialogRef<DimensionsComponent>) {
   }
 
 
@@ -45,8 +47,7 @@ export class DimensionsComponent {
   }
 
   apply() {
-    this.appService.searchSize = `${this.length}x${this.width}x${this.height}`
-    this.dialogRef.close(false)
+    this.dialogRef.close(`${this.length}x${this.width}x${this.height}`)
   }
 
   clear() {

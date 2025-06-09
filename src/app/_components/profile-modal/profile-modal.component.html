@@ -11,8 +11,8 @@
           alt="Фото пользователя"
           class="user-photo"/>
         <div class="image-select">
-          <img src="assets/img/camera.svg"/>
-          <input type="file" (change)="onFileSelected($event)"/>
+          <img src="assets/img/camera.svg" class="cursor"/>
+          <input type="file" (change)="onFileSelected($event)" class="cursor" accept="image/*"/>
         </div>
       </div>
       <div class="input-group mt-2">
@@ -44,7 +44,8 @@
           aria-label="День рождения"
           ngbDatepicker
           #d="ngbDatepicker"
-          (dateSelect)="d.close(); onDateSelect($event); "
+          formControlName="birthday"
+          (dateSelect)="d.close(); "
         />
       </div>
       <div class="input-group mt-2">

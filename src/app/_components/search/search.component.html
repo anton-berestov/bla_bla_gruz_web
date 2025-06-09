@@ -22,8 +22,8 @@
           <input
             type="text"
             class="form-control border-0"
-            placeholder="Откуда"
-            aria-label="Откуда"
+            placeholder="Откуда*"
+            aria-label="Откуда*"
             #from
           />
           <div *ngIf="suggestionsFrom.length" class="position-absolute w-100 top-10" style="z-index: 99999; top: 50px">
@@ -48,8 +48,8 @@
           <input
             type="text"
             class="form-control border-0"
-            placeholder="Куда"
-            aria-label="Куда"
+            placeholder="Куда*"
+            aria-label="Куда*"
             #where
           />
           <div *ngIf="suggestionsWhere.length" class="position-absolute w-100" style="z-index: 999; top: 50px">
@@ -74,11 +74,11 @@
           <input
             type="text"
             class="form-control border-0"
-            placeholder="Сегодня"
-            aria-label="Сегодня"
+            placeholder="Сегодня*"
+            aria-label="Сегодня*"
             ngbDatepicker
             #d="ngbDatepicker"
-            (dateSelect)="d.close(); onDateSelect($event); "
+            (dateSelect)="onDateSelect($event, d);"
             [minDate]="minDate"
           />
         </div>

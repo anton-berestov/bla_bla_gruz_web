@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { AppService } from '../../app.service';
 import { NgbDate, NgbDatepickerModule, NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { AsyncPipe, isPlatformBrowser, NgForOf, NgIf } from '@angular/common';
@@ -25,7 +25,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   styleUrl: './search.component.scss'
 })
-export class SearchComponent {
+export class SearchComponent implements AfterViewInit {
   @ViewChild('where') where!: ElementRef;
   @ViewChild('from') from!: ElementRef;
   suggestionsWhere: google.maps.places.AutocompletePrediction[] = [];
@@ -33,12 +33,13 @@ export class SearchComponent {
   autocomplete!: google.maps.places.AutocompleteService;
 
   readonly dialog = inject(MatDialog);
+  protected appService = inject(AppService);
   public minDate: NgbDateStruct;
 
   private googleApiKey = environment.googleApiKey;
 
 
-  constructor(protected appService: AppService, @Inject(PLATFORM_ID) private platformId: any) {
+  constructor(@Inject(PLATFORM_ID) private platformId: any) {
     const today = new Date();
     this.minDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
   }
@@ -176,7 +177,10 @@ export class SearchComponent {
     }
   }
 
-  onDateSelect(date: NgbDate): void {
+  onDateSelect(date: NgbDate, d: any): void {
+    setTimeout(() => {
+      d.close();
+    }, 0);
     const newDate = new Date(date.year, date.month - 1, date.day);
     this.appService.searchDate = Math.floor(newDate.getTime() / 1000);
   }
@@ -187,8 +191,12 @@ export class SearchComponent {
   }
 
   openDimensions() {
-    this.dialog.open(DimensionsComponent, {
+    const dialogRef = this.dialog.open(DimensionsComponent, {
       width: '50%',
     });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.appService.searchSize = result
+    })
   }
 }
