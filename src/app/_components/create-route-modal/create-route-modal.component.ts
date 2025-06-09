@@ -26,6 +26,7 @@ import {
 import { environment } from '../../../environments/environment';
 import { ToastService } from '../../_components/toast/toast.service';
 import { AppService } from '../../app.service';
+import { AddWaypointModalComponent } from '../add-waypoint-modal/add-waypoint-modal.component';
 import { DimensionsComponent } from '../dimensions/dimensions.component';
 import { CreateRouteService } from './create-route.service';
 
@@ -84,11 +85,21 @@ export class CreateRouteModalComponent implements AfterViewInit {
     ),
     end_date: new FormControl(new Date(), Validators.required),
     end_time: new FormControl(null, Validators.required),
-    cargo_types: new FormControl([]),
+    cargo_types: new FormControl([] as string[]),
     size: new FormControl(''),
-    weight: new FormControl(null),
-    waypoints: new FormControl([]),
-    price: new FormControl(null),
+    weight: new FormControl(null as number | null),
+    waypoints: new FormControl<
+      Array<{
+        point: string | null;
+        coordinates: {
+          lat: number | undefined;
+          lng: number | undefined;
+        } | null;
+        date: number | null;
+        time: string | null;
+      }>
+    >([]),
+    price: new FormControl(null as number | null),
   });
 
   constructor(@Inject(PLATFORM_ID) private platformId: any) {
@@ -299,8 +310,19 @@ export class CreateRouteModalComponent implements AfterViewInit {
     );
 
     const waypoints = this.routeForm.get('waypoints')?.value;
-    if (waypoints && waypoints.length > 0) {
-      formData.append('checkpoints', JSON.stringify(waypoints));
+
+    if (Array.isArray(waypoints)) {
+      waypoints.forEach((checkpoint: any, index: number) => {
+        formData.append(
+          `checkpoints[${index}][point]`,
+          checkpoint.point?.name ?? checkpoint.point ?? ''
+        );
+        formData.append(`checkpoints[${index}][date]`, checkpoint.date);
+        formData.append(
+          `checkpoints[${index}][coordinates]`,
+          `${checkpoint.coordinates.lat},${checkpoint.coordinates.lng}`
+        );
+      });
     }
 
     formData.append('start[size]', this.routeForm.get('size')?.value || '');
@@ -348,5 +370,47 @@ export class CreateRouteModalComponent implements AfterViewInit {
     const timestampMilliseconds = combinedDate.getTime();
 
     return Math.floor(timestampMilliseconds / 1000);
+  }
+
+  openAddWaypointModal() {
+    const modalRef = this.modalService.open(AddWaypointModalComponent, {
+      size: 'md',
+      backdrop: 'static',
+      windowClass: 'add-waypoint-modal',
+      centered: true,
+    });
+
+    modalRef.result.then((result) => {
+      if (result) {
+        console.log('Waypoint added:', result);
+        this.routeForm
+          .get('waypoints')
+          ?.setValue([
+            ...(this.routeForm.get('waypoints')?.value || []),
+            result,
+          ]);
+      }
+    });
+  }
+
+  removeWaypoint(index: number) {
+    const waypoints = this.routeForm.get('waypoints')?.value;
+    if (waypoints && waypoints.length > 0) {
+      const newWaypoints = waypoints.filter((_, i) => i !== index);
+      this.routeForm.get('waypoints')?.setValue(newWaypoints);
+    }
+  }
+
+  formatDate(date: number | null): string {
+    if (date === null) {
+      return ''; // Or any other placeholder for null dates
+    }
+    const d = new Date(date * 1000); // Convert timestamp to milliseconds
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
+    return `${day.toString().padStart(2, '0')}-${month
+      .toString()
+      .padStart(2, '0')}-${year}`;
   }
 }

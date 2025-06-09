@@ -1,0 +1,25 @@
+/* add-waypoint-modal.component.scss */
+.z-index-1000 {
+  z-index: 1000;
+}
+
+::ng-deep .add-waypoint-modal {
+  z-index: 100000 !important;
+
+  .modal-dialog {
+    z-index: 100000 !important;
+  }
+
+  .modal-content {
+    z-index: 100000 !important;
+  }
+
+  ngb-datepicker-navigation-select .form-select {
+    display: inline-block;
+    width: auto;
+  }
+
+  .dropdown-menu {
+    z-index: 100001 !important;
+  }
+}

@@ -1,0 +1,78 @@
+<div class="p-4">
+  <div class="d-flex justify-content-between align-items-center pb-3">
+    <div>Введите информацию о промежуточной точке</div>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    ></button>
+  </div>
+
+  <form [formGroup]="waypointForm">
+    <div class="input-group mb-3">
+      <span class="input-group-text bg-light border-0">
+        <i class="bi bi-geo-alt"></i>
+      </span>
+      <input
+        type="text"
+        class="form-control border-0"
+        placeholder="Откуда"
+        aria-label="Откуда"
+        formControlName="point"
+        #pointNameInput
+        (input)="initializeAutocomplete()"
+      />
+      <ul class="list-group position-absolute w-100 mt-5 z-index-1000">
+        <li
+          *ngFor="let suggestion of suggestions"
+          class="list-group-item list-group-item-action"
+          (click)="selectSuggestion(suggestion)"
+        >
+          {{ suggestion.description }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text bg-light border-0">
+        <i class="bi bi-calendar"></i>
+      </span>
+      <input
+        type="text"
+        class="form-control border-0"
+        placeholder="Дата"
+        aria-label="Дата"
+        formControlName="date"
+        ngbDatepicker
+        #d="ngbDatepicker"
+        [minDate]="minDate"
+        (dateSelect)="onDateSelect($event, d)"
+        (click)="d.open()"
+        placement="bottom-start"
+      />
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text bg-light border-0">
+        <i class="bi bi-clock"></i>
+      </span>
+      <ngb-timepicker
+        formControlName="time"
+        class="form-control border-0"
+        aria-placeholder="Время*"
+      />
+    </div>
+
+    <div class="col-12 text-end">
+      <button
+        type="button"
+        class="btn btn-primary px-4 fw-bold"
+        (click)="saveWaypoint()"
+        [disabled]="!waypointForm.valid"
+      >
+        Сохранить
+      </button>
+    </div>
+  </form>
+</div>
