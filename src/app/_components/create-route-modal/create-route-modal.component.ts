@@ -24,6 +24,7 @@ import {
   NgbTimepicker,
 } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../environments/environment';
+import { ToastService } from '../../_components/toast/toast.service';
 import { AppService } from '../../app.service';
 import { DimensionsComponent } from '../dimensions/dimensions.component';
 import { CreateRouteService } from './create-route.service';
@@ -47,6 +48,7 @@ export class CreateRouteModalComponent implements AfterViewInit {
   protected createRouteService = inject(CreateRouteService);
   private modalService = inject(NgbModal);
   private googleApiKey = environment.googleApiKey;
+  private toastService = inject(ToastService);
 
   @ViewChild('where') where!: ElementRef;
   @ViewChild('from') from!: ElementRef;
@@ -295,31 +297,26 @@ export class CreateRouteModalComponent implements AfterViewInit {
       'cargo_types',
       JSON.stringify(this.routeForm.get('cargo_types')?.value)
     );
-    formData.append('checkpoints', JSON.stringify([]));
 
-    if (this.routeForm.get('size')?.value) {
-      formData.append('start[size]', this.routeForm.get('size')?.value!);
+    const waypoints = this.routeForm.get('waypoints')?.value;
+    if (waypoints && waypoints.length > 0) {
+      formData.append('checkpoints', JSON.stringify(waypoints));
     }
+
+    formData.append('start[size]', this.routeForm.get('size')?.value || '');
 
     if (this.routeForm.get('comment')?.value) {
       formData.append('start[comment]', this.routeForm.get('comment')?.value!);
     }
 
-    let waypoints = [
-      {
-        point: 'Точка 1',
-        coordinates: '11.11,22.22',
-        date: new Date(new Date().getTime() + 43200000).toISOString(),
-      },
-      {
-        point: 'Точка 2',
-        coordinates: '33.33,44.44',
-        date: new Date(new Date().getTime() + 64800000).toISOString(),
-      },
-    ];
-
     this.createRouteService.createRoute(formData).subscribe((data) => {
       console.log(data);
+      this.toastService.show({
+        message: 'Маршрут успешно создан!',
+        classname: 'bg-success text-light',
+        delay: 5000,
+      });
+      this.activeModal.close();
     });
   }
 
