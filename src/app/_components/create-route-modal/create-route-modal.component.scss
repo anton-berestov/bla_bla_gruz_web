@@ -1,4 +1,26 @@
-::ng-deep .ngb-tp-input  {
+::ng-deep .ngb-tp-input {
   border-radius: 10px !important;
   padding: 10px 10px;
+}
+
+::ng-deep .dimensions-dialog {
+  .mat-mdc-dialog-container {
+    z-index: 9998 !important;
+  }
+
+  .cdk-overlay-pane {
+    z-index: 99999 !important;
+  }
+}
+
+::ng-deep .dimensions-modal {
+  z-index: 99999 !important;
+
+  .modal-dialog {
+    z-index: 99999 !important;
+  }
+
+  .modal-content {
+    z-index: 99999 !important;
+  }
 }

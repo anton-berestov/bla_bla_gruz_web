@@ -1,29 +1,23 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AppService } from '../../app.service';
-import { MatDialogRef } from '@angular/material/dialog';
 import { NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-dimensions',
-  imports: [
-    FormsModule,
-    NgIf
-  ],
+  standalone: true,
+  imports: [FormsModule, NgIf, NgbModule],
   templateUrl: './dimensions.component.html',
-  styleUrl: './dimensions.component.scss'
+  styleUrl: './dimensions.component.scss',
 })
 export class DimensionsComponent {
+  protected length: string = '';
+  protected width: string = '';
+  protected height: string = '';
 
-  protected length: string = ''
-  protected width: string = ''
-  protected height: string = ''
-
-  constructor(
-    protected appService: AppService,
-    public dialogRef: MatDialogRef<DimensionsComponent>) {
-  }
-
+  protected appService = inject(AppService);
+  protected activeModal = inject(NgbActiveModal);
 
   handlerLength(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -47,13 +41,13 @@ export class DimensionsComponent {
   }
 
   apply() {
-    this.dialogRef.close(`${this.length}x${this.width}x${this.height}`)
+    this.activeModal.close(`${this.length}x${this.width}x${this.height}`);
   }
 
   clear() {
-    this.length = ''
-    this.width = ''
-    this.height = ''
-    this.appService.searchSize = ''
+    this.length = '';
+    this.width = '';
+    this.height = '';
+    this.appService.searchSize = '';
   }
 }

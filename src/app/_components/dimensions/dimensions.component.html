@@ -1,5 +1,13 @@
 <div class="p-4">
-  <div class="pb-3">Введите информацию о размерах груза</div>
+  <div class="d-flex justify-content-between align-items-center pb-3">
+    <div>Введите информацию о размерах груза</div>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    ></button>
+  </div>
   <div class="input-group mb-3 text-align-center">
     <span class="input-group-text bg-light border-0">
       <i class="bi bi-box"></i>
@@ -12,6 +20,7 @@
       (input)="handlerLength($event)"
       (change)="handlerLength($event)"
       [(ngModel)]="length"
+      ngbAutofocus
     /><span class="input-group-text bg-light border-0 radius-right">см</span>
   </div>
   <div class="input-group mb-3">
@@ -34,7 +43,7 @@
     </span>
     <input
       type="text"
-      class="form-control border-0 "
+      class="form-control border-0"
       placeholder="Высота"
       aria-label="Высота"
       (input)="handlerHeight($event)"
@@ -44,17 +53,19 @@
     <span class="input-group-text bg-light border-0 radius-right">см</span>
   </div>
 
-  <div class="col-12 col-md-auto float-end">
+  <div class="col-12 col-md-auto float-end mb-3">
     <button
       *ngIf="width || height || length"
-      type="button" class="btn btn-danger px-4 fw-bold me-3"
+      type="button"
+      class="btn btn-danger px-4 fw-bold me-3"
       (click)="clear()"
     >
       Сбросить
     </button>
     <button
       [disabled]="!width || !height || !length"
-      type="button" class="btn btn-primary px-4 fw-bold"
+      type="button"
+      class="btn btn-primary px-4 fw-bold"
       (click)="apply()"
     >
       Применить

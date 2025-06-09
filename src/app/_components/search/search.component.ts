@@ -1,14 +1,26 @@
-import { AfterViewInit, Component, ElementRef, inject, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
-import { AppService } from '../../app.service';
-import { NgbDate, NgbDatepickerModule, NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { AsyncPipe, isPlatformBrowser, NgForOf, NgIf } from '@angular/common';
-import { GoogleMapsModule } from '@angular/google-maps'
 import {
-  MatDialog,
-} from '@angular/material/dialog';
-import { DimensionsComponent } from '../dimensions/dimensions.component';
-import { environment } from '../../../environments/environment';
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  Inject,
+  PLATFORM_ID,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  NgbDate,
+  NgbDatepickerModule,
+  NgbDateStruct,
+  NgbInputDatepicker,
+  NgbModal,
+} from '@ng-bootstrap/ng-bootstrap';
+import { environment } from '../../../environments/environment';
+import { AppService } from '../../app.service';
+import { DimensionsComponent } from '../dimensions/dimensions.component';
 
 @Component({
   selector: 'app-search',
@@ -20,10 +32,10 @@ import { FormsModule } from '@angular/forms';
     NgForOf,
     GoogleMapsModule,
     AsyncPipe,
-    FormsModule
+    FormsModule,
   ],
   standalone: true,
-  styleUrl: './search.component.scss'
+  styleUrl: './search.component.scss',
 })
 export class SearchComponent implements AfterViewInit {
   @ViewChild('where') where!: ElementRef;
@@ -38,10 +50,16 @@ export class SearchComponent implements AfterViewInit {
 
   private googleApiKey = environment.googleApiKey;
 
-
-  constructor(@Inject(PLATFORM_ID) private platformId: any) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+    private modalService: NgbModal
+  ) {
     const today = new Date();
-    this.minDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
+    this.minDate = {
+      year: today.getFullYear(),
+      month: today.getMonth() + 1,
+      day: today.getDate(),
+    };
   }
 
   ngAfterViewInit(): void {
@@ -53,8 +71,7 @@ export class SearchComponent implements AfterViewInit {
   private loadGoogleMapsApi(): Promise<void> {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
-      script.src =
-        `https://maps.googleapis.com/maps/api/js?key=${this.googleApiKey}&libraries=places`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${this.googleApiKey}&libraries=places`;
       script.async = true;
       script.defer = true;
       script.onload = () => resolve();
@@ -114,12 +131,17 @@ export class SearchComponent implements AfterViewInit {
   handlePlaceSelection(
     suggestion: google.maps.places.AutocompletePrediction,
     inputElement: HTMLInputElement,
-    assignTo: (location: { lat: number | undefined; lng: number | undefined }) => void,
+    assignTo: (location: {
+      lat: number | undefined;
+      lng: number | undefined;
+    }) => void,
     clearSuggestions: () => void
   ): void {
     inputElement.value = suggestion.description;
 
-    const placesService = new google.maps.places.PlacesService(document.createElement('div'));
+    const placesService = new google.maps.places.PlacesService(
+      document.createElement('div')
+    );
 
     placesService.getDetails(
       { placeId: suggestion.place_id },
@@ -138,13 +160,15 @@ export class SearchComponent implements AfterViewInit {
     clearSuggestions();
   }
 
-  selectSuggestionWhere(suggestion: google.maps.places.AutocompletePrediction): void {
+  selectSuggestionWhere(
+    suggestion: google.maps.places.AutocompletePrediction
+  ): void {
     this.handlePlaceSelection(
       suggestion,
       this.where.nativeElement,
       (location) => {
         this.appService.searchWhere = location;
-        this.appService.searchToString = suggestion.description
+        this.appService.searchToString = suggestion.description;
       },
       () => {
         this.suggestionsWhere = [];
@@ -152,13 +176,15 @@ export class SearchComponent implements AfterViewInit {
     );
   }
 
-  selectSuggestionFrom(suggestion: google.maps.places.AutocompletePrediction): void {
+  selectSuggestionFrom(
+    suggestion: google.maps.places.AutocompletePrediction
+  ): void {
     this.handlePlaceSelection(
       suggestion,
       this.from.nativeElement,
       (location) => {
         this.appService.searchFrom = location;
-        this.appService.searchFromString = suggestion.description
+        this.appService.searchFromString = suggestion.description;
       },
       () => {
         this.suggestionsFrom = [];
@@ -171,9 +197,8 @@ export class SearchComponent implements AfterViewInit {
     if (isChecked) {
       this.appService.selectedCargoTypes.push(cargoType);
     } else {
-      this.appService.selectedCargoTypes = this.appService.selectedCargoTypes.filter(
-        (type) => type !== cargoType
-      );
+      this.appService.selectedCargoTypes =
+        this.appService.selectedCargoTypes.filter((type) => type !== cargoType);
     }
   }
 
@@ -186,17 +211,24 @@ export class SearchComponent implements AfterViewInit {
   }
 
   search() {
-    this.appService.isLoading = true
-    this.appService.searchRoutes()
+    this.appService.isLoading = true;
+    this.appService.searchRoutes();
   }
 
   openDimensions() {
-    const dialogRef = this.dialog.open(DimensionsComponent, {
-      width: '50%',
+    const modalRef = this.modalService.open(DimensionsComponent, {
+      size: 'md',
+      backdrop: 'static',
+      windowClass: 'dimensions-modal',
+      centered: true,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.appService.searchSize = result
-    })
+    modalRef.result
+      .then((result) => {
+        this.appService.searchSize = result;
+      })
+      .catch(() => {
+        // Modal was dismissed
+      });
   }
 }

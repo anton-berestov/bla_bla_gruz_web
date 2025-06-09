@@ -15,12 +15,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import {
   NgbActiveModal,
   NgbDate,
   NgbDateStruct,
   NgbInputDatepicker,
+  NgbModal,
   NgbTimepicker,
 } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../environments/environment';
@@ -45,9 +45,8 @@ export class CreateRouteModalComponent implements AfterViewInit {
   protected activeModal = inject(NgbActiveModal);
   protected appService = inject(AppService);
   protected createRouteService = inject(CreateRouteService);
+  private modalService = inject(NgbModal);
   private googleApiKey = environment.googleApiKey;
-
-  readonly dialog = inject(MatDialog);
 
   @ViewChild('where') where!: ElementRef;
   @ViewChild('from') from!: ElementRef;
@@ -228,13 +227,24 @@ export class CreateRouteModalComponent implements AfterViewInit {
   }
 
   openDimensions() {
-    const dialogRef = this.dialog.open(DimensionsComponent, {
-      width: '50%',
-    });
+    try {
+      const modalRef = this.modalService.open(DimensionsComponent, {
+        size: 'md',
+        backdrop: 'static',
+        windowClass: 'dimensions-modal',
+        centered: true,
+      });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.routeForm.get('size')?.setValue(result);
-    });
+      modalRef.result
+        .then((result) => {
+          this.routeForm.get('size')?.setValue(result);
+        })
+        .catch((error) => {
+          console.error('Error opening dimensions modal:', error);
+        });
+    } catch (error) {
+      console.error('Error in openDimensions:', error);
+    }
   }
 
   createRoute() {

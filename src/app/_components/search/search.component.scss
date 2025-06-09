@@ -9,7 +9,7 @@
 
 .title {
   font-family: IntroBlackItalic, sans-serif;
-  color: #31357B;
+  color: #31357b;
   font-size: 125px;
   font-style: italic;
   font-weight: 600;
@@ -29,7 +29,6 @@
   text-align: right;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-
 }
 
 .form-check-label {
@@ -46,7 +45,6 @@ button.btn-primary {
 .shadow-sm {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 
 @media screen and (max-width: 768px) {
   .title {
@@ -68,7 +66,6 @@ button.btn-primary {
   }
 }
 
-
 @media screen and (max-width: 1280px) {
   .title {
     font-size: 105px;
@@ -82,5 +79,17 @@ button.btn-primary {
 
   .search-box {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+  }
+}
+
+::ng-deep .dimensions-modal {
+  z-index: 99999 !important;
+
+  .modal-dialog {
+    z-index: 99999 !important;
+  }
+
+  .modal-content {
+    z-index: 99999 !important;
   }
 }
