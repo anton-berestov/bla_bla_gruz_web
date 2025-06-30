@@ -3,6 +3,5 @@ export function objToFormData(obj: any) {
   Object.keys(obj).forEach((key) => {
     fd.append(key, obj[key] === null ? '' : obj[key]);
   });
-
   return fd;
 }

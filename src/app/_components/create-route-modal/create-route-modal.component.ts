@@ -1,10 +1,16 @@
-import { isPlatformBrowser, NgForOf, NgIf } from '@angular/common';
+import {
+  CommonModule,
+  isPlatformBrowser,
+  NgForOf,
+  NgIf,
+} from '@angular/common';
 import {
   AfterViewInit,
   Component,
   ElementRef,
   Inject,
   inject,
+  OnInit,
   PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
@@ -33,6 +39,7 @@ import { CreateRouteService } from './create-route.service';
 @Component({
   selector: 'app-create-route-modal',
   imports: [
+    CommonModule,
     FormsModule,
     NgIf,
     ReactiveFormsModule,
@@ -43,7 +50,7 @@ import { CreateRouteService } from './create-route.service';
   templateUrl: './create-route-modal.component.html',
   styleUrl: './create-route-modal.component.scss',
 })
-export class CreateRouteModalComponent implements AfterViewInit {
+export class CreateRouteModalComponent implements AfterViewInit, OnInit {
   protected activeModal = inject(NgbActiveModal);
   protected appService = inject(AppService);
   protected createRouteService = inject(CreateRouteService);
@@ -100,6 +107,7 @@ export class CreateRouteModalComponent implements AfterViewInit {
       }>
     >([]),
     price: new FormControl(null as number | null),
+    comment: new FormControl(''),
   });
 
   constructor(@Inject(PLATFORM_ID) private platformId: any) {
@@ -114,6 +122,10 @@ export class CreateRouteModalComponent implements AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       this.loadGoogleMapsApi().then(() => this.initializeAutocomplete());
     }
+  }
+
+  ngOnInit(): void {
+    this.appService.getCargoTypes();
   }
 
   private loadGoogleMapsApi(): Promise<void> {
@@ -412,5 +424,23 @@ export class CreateRouteModalComponent implements AfterViewInit {
     return `${day.toString().padStart(2, '0')}-${month
       .toString()
       .padStart(2, '0')}-${year}`;
+  }
+
+  onCargoTypeChange(event: Event, cargoType: number) {
+    const checkbox = event.target as HTMLInputElement;
+    const current: string[] = this.routeForm.get('cargo_types')?.value || [];
+    const cargoTypeStr = cargoType.toString();
+    if (checkbox.checked) {
+      this.routeForm.get('cargo_types')?.setValue([...current, cargoTypeStr]);
+    } else {
+      this.routeForm
+        .get('cargo_types')
+        ?.setValue(current.filter((t: string) => t !== cargoTypeStr));
+    }
+    this.routeForm.get('cargo_types')?.updateValueAndValidity();
+  }
+
+  trackByCargoType(index: number, item: { cargo_type: number }) {
+    return item.cargo_type;
   }
 }

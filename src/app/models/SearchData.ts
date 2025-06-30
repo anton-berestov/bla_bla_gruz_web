@@ -4,5 +4,5 @@ export interface SearchData {
   date: any;
   size?: string;
   weight?: string;
-  cargo_types?: number[]
+  cargo_types?: string;
 }

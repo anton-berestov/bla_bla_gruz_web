@@ -181,7 +181,7 @@ export class AddWaypointModalComponent implements AfterViewInit {
       day = startDate.getDate();
     } else if (startDate && typeof startDate === 'object') {
       year = startDate.year;
-      month = startDate.month - 1; // Convert to 0-based month
+      month = startDate.month - 1;
       day = startDate.day;
     } else {
       throw new Error('Invalid date format');
