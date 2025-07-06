@@ -1,6 +1,12 @@
 import { NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { AdvantagesComponent } from './_components/advantages/advantages.component';
 import { BlogComponent } from './_components/blog/blog.component';
 import { ChatModalComponent } from './_components/chat-modal/chat-modal.component';
@@ -12,6 +18,7 @@ import { SearchComponent } from './_components/search/search.component';
 import { StoreComponent } from './_components/store/store.component';
 import { ToastComponent } from './_components/toast/toast.component';
 import { AppService } from './app.service';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -37,15 +44,24 @@ export class AppComponent implements OnInit, OnDestroy {
   chatCompanionId: string = '';
   hasNewMessages: boolean = false;
   private newMessagesInterval: any = null;
+  private isAuth: boolean = false;
 
   constructor(
     protected appService: AppService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
     this.appService.getCargoTypes();
-    this.startNewMessagesPolling();
+
+    this.authService.isAuth$.subscribe((auth) => {
+      this.isAuth = auth;
+      if (this.isAuth) {
+        this.startNewMessagesPolling();
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -62,11 +78,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   checkNewMessages() {
-    const idAccount = localStorage.getItem('accountId');
-    if (!idAccount) {
-      this.hasNewMessages = false;
-      return;
-    }
+    const idAccount = localStorage.getItem('accountId')!;
     this.chatService.getChatsList(idAccount).subscribe({
       next: (data) => {
         const chats = data?.dialogues || [];

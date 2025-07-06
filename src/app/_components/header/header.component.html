@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-xxl navbar-light w-100 py-3 px-4">
       <!-- Логотип -->
       <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="assets/img/logo.svg" alt="logo" class="me-4"/>
+        <img src="assets/img/logo.svg" alt="logo" class="me-4" />
         <div class="blablagruz d-none d-md-inline">BlaBlaGruz</div>
         <span class="subtitle ms-3 d-none d-md-inline">
           — грузоперевозки просто и удобно
@@ -29,11 +29,14 @@
         <ul class="navbar-nav ms-auto">
           <!-- Мои маршруты -->
           <li class="nav-item" *ngIf="isAuth">
-            <button class="nav-link d-flex align-items-center" (click)="openRoutes()">
+            <button
+              class="nav-link d-flex align-items-center"
+              (click)="openRoutes()"
+            >
               <img
                 src="assets/img/routes.svg"
                 alt="logo"
-                style="width: 20px; height: 20px;"
+                style="width: 20px; height: 20px"
               />
               <span class="ms-2">Мои маршруты</span>
             </button>
@@ -41,33 +44,47 @@
 
           <!-- Создать маршрут -->
           <li class="nav-item" *ngIf="isAuth">
-            <button class="nav-link d-flex align-items-center" (click)="createRoute()">
+            <button
+              class="nav-link d-flex align-items-center"
+              (click)="createRoute()"
+            >
               <img
                 src="assets/img/add-route.svg"
                 alt="logo"
-                style="width: 20px; height: 20px;"
+                style="width: 20px; height: 20px"
               />
               <span class="ms-2">Создать маршрут</span>
             </button>
           </li>
 
-          <li ngbDropdown class="nav-item" role="presentation" *ngIf="!isAuth">
-            <button type="button" class="nav-link" ngbDropdownToggle>Профиль</button>
+          <li ngbDropdown class="nav-item" role="presentation">
+            <button type="button" class="nav-link" ngbDropdownToggle>
+              Профиль
+            </button>
             <div ngbDropdownMenu>
-              <a class="nav-link d-flex align-items-center" href="#profile" ngbDropdownItem (click)="open()">
+              <button
+                *ngIf="isBrowser && !isAuth"
+                class="nav-link d-flex align-items-center"
+                ngbDropdownItem
+                (click)="open()"
+              >
                 <span class="ms-2">Авторизация</span>
-              </a>
-            </div>
-          </li>
-
-          <li ngbDropdown class="nav-item" role="presentation" *ngIf="isAuth">
-            <button type="button" class="nav-link" ngbDropdownToggle>Профиль</button>
-            <div ngbDropdownMenu>
-              <button class="nav-link d-flex align-items-center" ngbDropdownItem (click)="getProfile()">
-                Профиль
               </button>
-              <button class="nav-link d-flex align-items-center" ngbDropdownItem (click)="logout()">
-                Выйти
+              <button
+                *ngIf="isAuth"
+                class="nav-link d-flex align-items-center"
+                ngbDropdownItem
+                (click)="getProfile()"
+              >
+                <span class="ms-2">Профиль</span>
+              </button>
+              <button
+                *ngIf="isAuth"
+                class="nav-link d-flex align-items-center"
+                ngbDropdownItem
+                (click)="logout()"
+              >
+                <span class="ms-2">Выйти</span>
               </button>
             </div>
           </li>

@@ -10,7 +10,9 @@ export class AuthService {
 
   private getAuthState(): boolean {
     try {
-      return typeof window !== 'undefined' && !!localStorage.getItem('accountId');
+      return (
+        typeof window !== 'undefined' && !!localStorage.getItem('accountId')
+      );
     } catch (error) {
       console.warn('Ошибка при доступе к localStorage:', error);
       return false;
