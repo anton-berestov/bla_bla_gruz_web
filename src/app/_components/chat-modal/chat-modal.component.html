@@ -8,7 +8,7 @@
       >
         <i class="bi bi-arrow-left" style="font-size: 1.3rem"></i>
       </button>
-      <span>Диалог</span>
+      <span>{{ companionName || "Диалог" }}</span>
     </ng-container>
     <ng-container *ngIf="!companionId">
       <span>Чаты</span>
@@ -25,29 +25,48 @@
           Нет сообщений
         </div>
         <ul *ngIf="messages.length > 0" class="chat-messages mb-2">
-          <li *ngFor="let msg of messages" class="chat-message">
-            <div class="chat-message-author">
-              {{ msg.sender_name || msg.sender || "Пользователь" }}
-            </div>
+          <li
+            *ngFor="let msg of messages"
+            class="chat-message"
+            [ngClass]="{
+              'chat-message-out': msg.sender == accountId,
+              'chat-message-in': msg.sender != accountId
+            }"
+          >
             <div class="chat-message-text">{{ msg.text }}</div>
             <div class="chat-message-date">{{ msg.date | date : "short" }}</div>
           </li>
         </ul>
-        <div *ngIf="cargoFlag" class="chat-flag">
-          Флаг груза: {{ cargoFlag }}
-        </div>
-        <div *ngIf="blockedFlag" class="chat-flag">
-          Флаг блокировки: {{ blockedFlag }}
-        </div>
       </ng-container>
       <!-- Список чатов -->
       <ng-container *ngIf="!companionId">
         <div *ngIf="chats.length === 0" class="text-center text-muted my-3">
           Нет чатов
         </div>
-        <ul *ngIf="chats.length > 0" class="list-group">
-          <li *ngFor="let chat of chats" class="list-group-item">
-            {{ chat.name || chat.title || "Чат" }}
+        <ul *ngIf="chats.length > 0" class="list-group chat-list">
+          <li
+            *ngFor="let chat of chats"
+            class="list-group-item chat-list-item d-flex align-items-center gap-2"
+            (click)="openChatDialogue(chat)"
+          >
+            <img
+              [src]="chat.user.photo"
+              alt="avatar"
+              class="chat-avatar me-2"
+              width="38"
+              height="38"
+            />
+            <div class="flex-grow-1">
+              <div class="fw-bold">
+                {{ chat.user.name || "Без имени" }} {{ chat.user.surname }}
+              </div>
+              <div class="text-muted small">{{ chat.message.text }}</div>
+            </div>
+            <span
+              *ngIf="chat.new_messages"
+              class="badge bg-primary rounded-pill"
+              >{{ chat.new_messages }}</span
+            >
           </li>
         </ul>
       </ng-container>
@@ -55,7 +74,7 @@
   </div>
   <form
     *ngIf="companionId && !loading && !error"
-    (ngSubmit)="$event.preventDefault()"
+    (ngSubmit)="onSendMessage()"
     class="chat-input-form"
   >
     <div class="chat-input-group">
@@ -65,11 +84,12 @@
         name="messageText"
         placeholder="Введите сообщение..."
         rows="2"
+        (keydown.enter)="onEnter($event)"
       ></textarea>
       <button
         class="btn chat-send-btn"
         type="submit"
-        [disabled]="!messageText.trim()"
+        [disabled]="!messageText.trim() || sending"
       >
         <i class="bi bi-send" style="font-size: 1.5rem"></i>
       </button>

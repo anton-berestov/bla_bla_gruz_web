@@ -27,6 +27,7 @@
 <!-- Фиксированная кнопка чата -->
 <button class="chat-fab" (click)="openChatModal()">
   <i class="bi bi-chat"></i>
+  <span *ngIf="hasNewMessages" class="chat-fab-indicator"></span>
 </button>
 <app-chat-modal
   *ngIf="isChatModalOpen"

@@ -1,3 +1,16 @@
+.chat-fab-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 14px;
+  height: 14px;
+  background: #e53935;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  z-index: 2;
+  box-shadow: 0 0 4px rgba(229, 57, 53, 0.3);
+}
+
 .chat-fab {
   position: fixed;
   right: 32px;
@@ -16,6 +29,7 @@
   font-size: 2rem;
   cursor: pointer;
   transition: background 0.2s;
+  overflow: visible;
 }
 
 .chat-fab:hover {

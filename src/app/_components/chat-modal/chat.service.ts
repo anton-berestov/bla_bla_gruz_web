@@ -18,4 +18,20 @@ export class ChatService {
     formData.append('companion', companionId);
     return this.http.post<any>('/rest/dialogues/get_dialogue', formData);
   }
+
+  sendMessage(body: {
+    account: string;
+    sender: string;
+    recipient: string;
+    dialogue: string;
+    text: string;
+  }): Observable<any> {
+    const formData = new FormData();
+    formData.append('account', body.account);
+    formData.append('sender', body.sender);
+    formData.append('recipient', body.recipient);
+    formData.append('dialogue', body.dialogue);
+    formData.append('text', body.text);
+    return this.http.post<any>('/rest/dialogues/send', formData);
+  }
 }
