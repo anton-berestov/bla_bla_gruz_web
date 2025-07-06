@@ -1,0 +1,185 @@
+.routes-modal {
+  min-width: 320px;
+  max-width: 900px;
+  padding: 20px 10px;
+}
+
+.routes-modal h3 {
+  text-align: center;
+  font-weight: 600;
+}
+
+.card {
+  border-radius: 12px;
+  border: none;
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.alert-info {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.route-card {
+  background-color: #f9f9ff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.route-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
+
+.departure,
+.arrival {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  align-items: center;
+}
+
+.time {
+  font-family: Geologica, serif;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 19.2px;
+  letter-spacing: -0.07em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #000;
+}
+
+.date {
+  color: #9399b9;
+  font-family: Geologica, serif;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 14.4px;
+  letter-spacing: -0.03em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.travel-time {
+  font-size: 24px;
+  font-weight: bold;
+  color: #9399b9;
+}
+
+.location-section {
+  width: 100%;
+}
+
+.location {
+  font-family: Geologica, serif;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.restrictions-block {
+  min-width: 160px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.restrictions-block .icon {
+  margin-bottom: 8px;
+}
+
+.restrictions-block .title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #9399b9;
+  margin-left: 8px;
+}
+
+.restrictions-block .text {
+  font-size: 14px;
+  color: #333;
+}
+
+.weight {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.service-cost {
+  min-width: 180px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-cost .title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #9399b9;
+}
+
+.service-cost .cost {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+}
+
+.amount {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.unit {
+  font-size: 14px;
+  color: #9399b9;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  background: #9399b9;
+  border-radius: 50%;
+  margin: 0 2px;
+}
+
+.line-bar {
+  width: 30px;
+  height: 2px;
+  background: #9399b9;
+  margin: 0 2px;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 10px solid #9399b9;
+  margin-left: 2px;
+}

@@ -98,4 +98,11 @@ export class AppService {
       objToFormData({ account: localStorage.getItem('accountId') })
     );
   }
+
+  getMyRoutesList(account: string) {
+    return this.http.post<any>(
+      `${this.baseUrl}routes/get_my_routes_list`,
+      objToFormData({ account, type: 1 })
+    );
+  }
 }

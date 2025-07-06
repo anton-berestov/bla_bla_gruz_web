@@ -14,6 +14,7 @@ import {
   NgbDropdownToggle,
   NgbModal,
 } from '@ng-bootstrap/ng-bootstrap';
+import { AppService } from '../../app.service';
 import { AuthService } from '../../auth.service';
 import { CreateRouteModalComponent } from '../create-route-modal/create-route-modal.component';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
@@ -35,6 +36,7 @@ import { RoutesModalComponent } from '../routes-modal/routes-modal.component';
 export class HeaderComponent implements OnInit, OnDestroy {
   private modalService = inject(NgbModal);
   private authService = inject(AuthService);
+  private appService = inject(AppService);
 
   public isAuth: boolean = false;
   private intervalId: any;
@@ -69,6 +71,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   openRoutes() {
     this.modalService.open(RoutesModalComponent);
+  }
+
+  openMyRoutes() {
+    const idAccount = localStorage.getItem('accountId');
+    if (!idAccount) return;
+    const modalRef = this.modalService.open(RoutesModalComponent, {
+      size: 'xl',
+    });
   }
 
   ngOnDestroy(): void {
