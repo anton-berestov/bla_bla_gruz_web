@@ -1,5 +1,5 @@
 .route-card {
-  background-color: #F9F9FF;
+  background-color: #f9f9ff;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -97,7 +97,6 @@
   text-align: center;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-
 }
 
 .reviews-text {
@@ -110,7 +109,7 @@
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  color: #9399B9;
+  color: #9399b9;
 }
 
 .executor {
@@ -149,13 +148,13 @@
   border-radius: 10px;
 }
 
-.departure, .arrival {
+.departure,
+.arrival {
   display: flex;
   flex-direction: row;
   text-align: center;
   align-items: center;
 }
-
 
 .time {
   font-family: Geologica, serif;
@@ -171,7 +170,7 @@
 }
 
 .date {
-  color: #9399B9;
+  color: #9399b9;
   font-family: Geologica, serif;
   font-size: 12px;
   font-style: italic;
@@ -186,7 +185,7 @@
 .travel-time {
   font-size: 24px;
   font-weight: bold;
-  color: #9399B9;
+  color: #9399b9;
 }
 
 .location-section {
@@ -218,24 +217,25 @@
   z-index: 10;
 }
 
-.circle, .arrow {
+.circle,
+.arrow {
   width: 16px;
   height: 16px;
-  border: 3px solid #9399B9;
+  border: 3px solid #9399b9;
   border-radius: 50%;
   background: #fff;
 }
 
 .arrow {
   transform: rotate(225deg);
-  border-color: #F9F9FF #F9F9FF #9399B9 #9399B9;
+  border-color: #f9f9ff #f9f9ff #9399b9 #9399b9;
   border-radius: unset;
   margin-left: -16px;
 }
 
 .line-bar {
   height: 3px;
-  background: #9399B9;
+  background: #9399b9;
   flex: 1;
   z-index: 10;
 }
@@ -255,7 +255,6 @@
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-
 }
 
 .weight {
@@ -268,7 +267,7 @@
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  color: #9399B9;
+  color: #9399b9;
 }
 
 .weight span {
@@ -314,7 +313,7 @@
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  color: #9399B9;
+  color: #9399b9;
 }
 
 .unit {
@@ -326,16 +325,15 @@
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  color: #9399B9;
+  color: #9399b9;
 }
-
 
 .icon-block {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background-color: #DDE0F2;
+  background-color: #dde0f2;
   border-radius: 12px;
   width: 100px;
   height: 120px;
@@ -357,12 +355,12 @@
 .divider {
   width: 100%;
   border: none;
-  border-top: 1px solid #9399B9;
+  border-top: 1px solid #9399b9;
   margin: 5px 0;
 }
 
 .additional-container {
-  background: #4A4AC8;
+  background: #4a4ac8;
   border-radius: 0 0 10px 10px;
 }
 

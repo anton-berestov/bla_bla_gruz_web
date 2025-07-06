@@ -71,7 +71,7 @@ export class SearchComponent implements AfterViewInit {
   private loadGoogleMapsApi(): Promise<void> {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${this.googleApiKey}&libraries=places`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${this.googleApiKey}&libraries=places&language=ru`;
       script.async = true;
       script.defer = true;
       script.onload = () => resolve();
@@ -88,7 +88,7 @@ export class SearchComponent implements AfterViewInit {
         const query = this.where.nativeElement.value;
         if (query) {
           this.autocomplete.getPlacePredictions(
-            { input: query },
+            { input: query, language: 'ru' },
             (predictions, status) => {
               if (
                 status === google.maps.places.PlacesServiceStatus.OK &&
@@ -109,7 +109,7 @@ export class SearchComponent implements AfterViewInit {
         const query = this.from.nativeElement.value;
         if (query) {
           this.autocomplete.getPlacePredictions(
-            { input: query },
+            { input: query, language: 'ru' },
             (predictions, status) => {
               if (
                 status === google.maps.places.PlacesServiceStatus.OK &&
@@ -144,7 +144,7 @@ export class SearchComponent implements AfterViewInit {
     );
 
     placesService.getDetails(
-      { placeId: suggestion.place_id },
+      { placeId: suggestion.place_id, language: 'ru' },
       (place, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK && place) {
           assignTo({

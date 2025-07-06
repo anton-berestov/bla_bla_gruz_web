@@ -17,7 +17,7 @@ export interface StartPoint {
   size?: string;
   comment?: string;
   account: string;
-  coordinates?: string
+  coordinates?: string;
 }
 
 export interface Checkpoint {
@@ -28,6 +28,5 @@ export interface Checkpoint {
 export interface EndPoint {
   point: string;
   date: string;
-  coordinates?: string
+  coordinates?: string;
 }
-

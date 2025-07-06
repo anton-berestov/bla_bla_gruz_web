@@ -8,7 +8,6 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { AdvantagesComponent } from './_components/advantages/advantages.component';
-import { BlogComponent } from './_components/blog/blog.component';
 import { ChatModalComponent } from './_components/chat-modal/chat-modal.component';
 import { ChatService } from './_components/chat-modal/chat.service';
 import { FooterComponent } from './_components/footer/footer.component';
@@ -28,7 +27,6 @@ import { AuthService } from './auth.service';
     SearchComponent,
     AdvantagesComponent,
     StoreComponent,
-    BlogComponent,
     NgIf,
     RoutesComponent,
     ToastComponent,

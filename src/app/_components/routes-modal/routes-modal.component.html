@@ -18,10 +18,7 @@
                   >- {{ +route.start.date * 1000 | date : "dd.MM" }}</span
                 >
               </div>
-              <div class="line">
-                <div class="circle"></div>
-                <div class="line-bar"></div>
-              </div>
+
               <div class="location mt-2">{{ route.start.point }}</div>
             </div>
             <div class="travel-time mx-1">
@@ -38,10 +35,7 @@
                   +route.end.date * 1000 | date : "HH:mm"
                 }}</span>
               </div>
-              <div class="line">
-                <div class="line-bar"></div>
-                <div class="arrow"></div>
-              </div>
+
               <div class="location mt-2">{{ route.end.point }}</div>
             </div>
           </div>
