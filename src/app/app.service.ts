@@ -73,18 +73,38 @@ export class AppService {
             });
           } else {
             this.toastService.clear();
+            let completedRequests = 0;
+            const totalRequests = response.length;
+
+            response.forEach((route: any) => {
+              this.http
+                .post<Route>(
+                  `${this.baseUrl}routes/get_detailed_information`,
+                  objToFormData({ route: route.route })
+                )
+                .subscribe((data: Route) => {
+                  console.log(data);
+                  if (
+                    data.account.account !== localStorage.getItem('accountId')
+                  ) {
+                    this.routes.push(data);
+                  }
+
+                  completedRequests++;
+                  if (completedRequests === totalRequests) {
+                    this.isLoading = false;
+                    if (this.routes.length === 0) {
+                      this.toastService.show({
+                        message:
+                          'Маршруты на эту дату или с такими параметрами не найдены!',
+                        classname: 'bg-warning text-light',
+                        delay: 15000,
+                      });
+                    }
+                  }
+                });
+            });
           }
-          response.forEach((route: any) => {
-            this.http
-              .post<Route>(
-                `${this.baseUrl}routes/get_detailed_information`,
-                objToFormData({ route: route.route })
-              )
-              .subscribe((data: Route) => {
-                this.routes.push(data);
-                this.isLoading = false;
-              });
-          });
         },
         (error) => {
           console.error('Error:', error);
