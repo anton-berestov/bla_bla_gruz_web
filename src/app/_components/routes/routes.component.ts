@@ -1,41 +1,32 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { AppService } from '../../app.service';
 import { DatePipe, NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
-import { routes } from '../../app.routes';
-import moment from 'moment';
-import 'moment/locale/ru'
-import { MatTooltip } from '@angular/material/tooltip';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import moment from 'moment';
+import 'moment/locale/ru';
+import { AppService } from '../../app.service';
 import { AuthService } from '../../auth.service';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 
 @Component({
   selector: 'app-routes',
-  imports: [
-    NgForOf,
-    DatePipe,
-    NgIf,
-    NgClass,
-    NgStyle,
-    NgbTooltip,
-  ],
+  imports: [NgForOf, DatePipe, NgIf, NgClass, NgStyle, NgbTooltip],
   templateUrl: './routes.component.html',
-  styleUrl: './routes.component.scss'
+  styleUrl: './routes.component.scss',
 })
-export class RoutesComponent implements OnInit{
-  private authService = inject(AuthService)
+export class RoutesComponent implements OnInit {
+  @Output() openDialogue = new EventEmitter<string>();
+  private authService = inject(AuthService);
   private modalService = inject(NgbModal);
 
   constructor(protected appService: AppService) {
     moment.locale('ru');
   }
 
-
   protected activeIndex: number | null = null;
   protected isAuth: boolean = false;
 
   ngOnInit(): void {
-    this.authService.isAuth$.subscribe(auth => {
+    this.authService.isAuth$.subscribe((auth) => {
       this.isAuth = auth;
     });
   }
@@ -64,8 +55,8 @@ export class RoutesComponent implements OnInit{
     this.activeIndex = this.activeIndex === index ? null : index;
   }
 
-  openChat(value: any) {
-
+  openChat(route: any) {
+    this.openDialogue.emit(route.account.account);
   }
 
   openLoginModal() {

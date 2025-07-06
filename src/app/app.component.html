@@ -8,14 +8,28 @@
     <app-store></app-store>
     <app-blog></app-blog>
   </ng-container>
-  <app-routes *ngIf="appService.routes.length"></app-routes>
+  <app-routes
+    *ngIf="appService.routes.length"
+    (openDialogue)="openDialogue($event)"
+  ></app-routes>
 
   <div *ngIf="appService.isLoading" style="height: 100vh">
     <div class="loader-overlay">
-      <div class="spinner-border text-primary spinner-shadow" role="status">
-      </div>
+      <div
+        class="spinner-border text-primary spinner-shadow"
+        role="status"
+      ></div>
     </div>
   </div>
-
 </main>
 <app-footer></app-footer>
+
+<!-- Фиксированная кнопка чата -->
+<button class="chat-fab" (click)="openChatModal()">
+  <i class="bi bi-chat"></i>
+</button>
+<app-chat-modal
+  *ngIf="isChatModalOpen"
+  [companionId]="chatCompanionId"
+  (close)="isChatModalOpen = false"
+></app-chat-modal>

@@ -1,0 +1,78 @@
+<div class="chat-modal-backdrop" (click)="close.emit()"></div>
+<div class="chat-modal-window">
+  <div class="chat-modal-header">
+    <ng-container *ngIf="companionId">
+      <button
+        class="btn btn-link p-0 me-2 chat-back-btn"
+        (click)="backToChats()"
+      >
+        <i class="bi bi-arrow-left" style="font-size: 1.3rem"></i>
+      </button>
+      <span>Диалог</span>
+    </ng-container>
+    <ng-container *ngIf="!companionId">
+      <span>Чаты</span>
+    </ng-container>
+    <button class="btn-close" (click)="close.emit()"></button>
+  </div>
+  <div class="chat-modal-body">
+    <ng-container *ngIf="loading">Загрузка...</ng-container>
+    <ng-container *ngIf="error">{{ error }}</ng-container>
+    <ng-container *ngIf="!loading && !error">
+      <!-- Диалог -->
+      <ng-container *ngIf="companionId">
+        <div *ngIf="messages.length === 0" class="text-center text-muted my-3">
+          Нет сообщений
+        </div>
+        <ul *ngIf="messages.length > 0" class="chat-messages mb-2">
+          <li *ngFor="let msg of messages" class="chat-message">
+            <div class="chat-message-author">
+              {{ msg.sender_name || msg.sender || "Пользователь" }}
+            </div>
+            <div class="chat-message-text">{{ msg.text }}</div>
+            <div class="chat-message-date">{{ msg.date | date : "short" }}</div>
+          </li>
+        </ul>
+        <div *ngIf="cargoFlag" class="chat-flag">
+          Флаг груза: {{ cargoFlag }}
+        </div>
+        <div *ngIf="blockedFlag" class="chat-flag">
+          Флаг блокировки: {{ blockedFlag }}
+        </div>
+      </ng-container>
+      <!-- Список чатов -->
+      <ng-container *ngIf="!companionId">
+        <div *ngIf="chats.length === 0" class="text-center text-muted my-3">
+          Нет чатов
+        </div>
+        <ul *ngIf="chats.length > 0" class="list-group">
+          <li *ngFor="let chat of chats" class="list-group-item">
+            {{ chat.name || chat.title || "Чат" }}
+          </li>
+        </ul>
+      </ng-container>
+    </ng-container>
+  </div>
+  <form
+    *ngIf="companionId && !loading && !error"
+    (ngSubmit)="$event.preventDefault()"
+    class="chat-input-form"
+  >
+    <div class="chat-input-group">
+      <textarea
+        class="form-control chat-textarea"
+        [(ngModel)]="messageText"
+        name="messageText"
+        placeholder="Введите сообщение..."
+        rows="2"
+      ></textarea>
+      <button
+        class="btn chat-send-btn"
+        type="submit"
+        [disabled]="!messageText.trim()"
+      >
+        <i class="bi bi-send" style="font-size: 1.5rem"></i>
+      </button>
+    </div>
+  </form>
+</div>
