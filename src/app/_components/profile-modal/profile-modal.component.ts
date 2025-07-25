@@ -53,7 +53,7 @@ export class ProfileModalComponent implements OnInit {
       this.userForm.patchValue({
         name: data.name || '',
         surname: data.surname || '',
-        phone: data.phone || '',
+        phone: data.phone ? data.phone.slice(1) : '',
         photo: data.photo || '',
         email: data.email || '',
         rating: data.rating || 0,

@@ -19,4 +19,9 @@ export class FooterComponent {
   openAppStore() {
     window.open('https://apps.apple.com/ru/app/blablagruz/id1604597886?l=en-GB', '_blank')
   }
+
+  openMailClient() {
+    window.location.href = 'mailto:info@blablagruz.com';
+  }
+
 }
